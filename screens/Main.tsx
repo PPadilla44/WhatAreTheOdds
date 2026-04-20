@@ -1,36 +1,60 @@
 import { StyleSheet } from 'react-native';
-import { ButtonGroup, View } from "../components/Themed";
-import React, { FC } from 'react';
+import { View } from "../components/Themed";
+import React, { FC, useEffect, useRef } from 'react';
 import SubContainer from '../components/SubContainer';
 import ResetButton from '../components/ResetButton';
 import MainButton from '../components/MainButton';
+import BackgroundAmbient from '../components/BackgroundAmbient';
+import SegmentedPill from '../components/SegmentedPill';
 import { useClicker } from '../components/contexts/useClicker';
+import { useSettings } from '../components/contexts/useSettings';
+import { useStats } from '../components/contexts/useStats';
+import { recordHit } from '../store/utils/thunkerFunctions';
 import { RootTabScreenProps } from '../types';
-import Colors from '../constants/Colors';
+import Fonts from '../constants/Fonts';
 
 
-const Main: FC<RootTabScreenProps<"Main">> = ({ }) => {
+const Main: FC<RootTabScreenProps<"Play">> = ({ }) => {
 
     const { state, dispatch } = useClicker();
-    const { count, oddsString, title, fraction, multiplier, fractionPref } = state;
+    const { state: settings } = useSettings();
+    const { state: stats, dispatch: statsDispatch } = useStats();
+    const { count, oddsString, title, fraction, multiplier, fractionPref, didHit } = state;
     const { numerator, denominator } = fraction;
+
+    const theme = (settings.data.appearance.appearance as 'light' | 'dark') ?? 'dark';
+
+    // Record a hit into persistent stats once, when didHit flips true
+    const prevHit = useRef(false);
+    useEffect(() => {
+        if (didHit && !prevHit.current) {
+            recordHit(stats, statsDispatch, count);
+        }
+        prevHit.current = didHit;
+    }, [didHit, count]);
+
+    const probDisabled = multiplier === "B" || multiplier === "M";
 
     return (
         <View testID='Main' style={styles.container}>
+            <BackgroundAmbient theme={theme} />
 
-            <SubContainer
-                text={`${count}`}
-                textStyle={styles.clickAmnt}
-                title={`Times Clicked`}
-            />
+            <View style={styles.topSection} darkColor="transparent" lightColor="transparent">
+                <SubContainer
+                    text={`${count}`}
+                    textStyle={styles.clickAmnt}
+                    title={`Times Clicked`}
+                />
+            </View>
 
-            <MainButton />
+            <View style={styles.centerSection} darkColor="transparent" lightColor="transparent">
+                <MainButton />
+            </View>
 
-            <View style={{ alignItems: "center", justifyContent: "center" }}>
-
+            <View style={styles.bottomSection} darkColor="transparent" lightColor="transparent">
                 <SubContainer
                     text={
-                        multiplier === "B" || multiplier === "M" ?
+                        probDisabled ?
                             `${numerator} / ${denominator} ${multiplier}`
                             :
                             fractionPref ?
@@ -42,22 +66,19 @@ const Main: FC<RootTabScreenProps<"Main">> = ({ }) => {
                     title={title}
                 />
 
-                <ButtonGroup
-                    buttons={["Percent", "Fraction"]}
-                    onPress={(newIndex: number) => dispatch!({type: "SET_FRACTIONPREF", payload: newIndex})}
-                    selectedIndex={multiplier === "B" || multiplier === "M" ? 1 : fractionPref}
-                    containerStyle={styles.btnContainer}
-                    buttonStyle={styles.btn}
-                    textStyle={styles.btnText}
-                    selectedButtonStyle={styles.selectedBtn}
-                    selectedTextStyle={styles.btnSelectedText}
-                    disabled={multiplier === "B" || multiplier === "M"}
-                    disabledSelectedTextStyle={{ color: Colors.shared.icon }}
-                    disabledSelectedStyle={{ backgroundColor: "transparent" }}
-                />
-            </View>
+                <View style={styles.toggleWrap} darkColor="transparent" lightColor="transparent">
+                    <SegmentedPill
+                        testID="percent-fraction-toggle"
+                        options={["Percent", "Fraction"]}
+                        selectedIndex={probDisabled ? 1 : fractionPref}
+                        disabled={probDisabled}
+                        onChange={(newIndex) => dispatch!({ type: "SET_FRACTIONPREF", payload: newIndex })}
+                        width={260}
+                    />
+                </View>
 
-            <ResetButton />
+                <ResetButton />
+            </View>
 
         </View>
     )
@@ -69,41 +90,39 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         alignItems: "center",
-        justifyContent: "space-around",
+        justifyContent: "space-between",
+        paddingTop: 12,
+        paddingBottom: 24,
+        paddingHorizontal: 20,
+    },
+    topSection: {
+        width: "100%",
+        alignItems: "center",
+    },
+    centerSection: {
+        width: "100%",
+        alignItems: "center",
+        justifyContent: "center",
+        flex: 1,
+    },
+    bottomSection: {
+        alignItems: "center",
+        justifyContent: "center",
+        width: "100%",
+    },
+    toggleWrap: {
+        marginTop: 18,
     },
     clickAmnt: {
-        fontWeight: "bold",
-        fontSize: 64,
-        fontFamily: "Futura"
+        fontSize: 80,
+        fontFamily: Fonts.displayExtraBold,
+        letterSpacing: -3,
+        lineHeight: 86,
     },
     probText: {
-        fontWeight: "bold",
-        fontSize: 48,
+        fontSize: 44,
         textAlign: "center",
-        fontFamily: "Futura"
+        fontFamily: Fonts.displayBold,
+        letterSpacing: -1,
     },
-    btnContainer: {
-        height: 20,
-        marginTop: 0,
-        borderColor: "transparent",
-        backgroundColor: "transparent",
-        width: 250,
-    },
-    btn: {
-        opacity: .5
-    },
-    btnText: {
-        fontFamily: "Futura",
-        fontSize: 15,
-        letterSpacing: 1.2,
-        fontWeight: "bold",
-        color: Colors.dark.input
-    },
-    selectedBtn: {
-        backgroundColor: "transparent",
-        opacity: 1
-    },
-    btnSelectedText: {
-        color: Colors.shared.icon
-    }
 })

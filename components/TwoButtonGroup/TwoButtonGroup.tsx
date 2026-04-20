@@ -1,8 +1,7 @@
-import { Alert, StyleSheet } from 'react-native'
+import { Alert } from 'react-native'
 import React, { FC, useEffect } from 'react'
-import { ButtonGroup } from '../Themed'
 import { useClicker } from '../contexts/useClicker';
-import { ClickerState } from '../../store/clicker';
+import SegmentedPill from '../SegmentedPill';
 
 interface Props {
     buttons: any[];
@@ -20,12 +19,10 @@ const TwoButtonGroup: FC<Props> = ({ buttons, clearForm }) => {
 
     const { state, dispatch } = useClicker();
 
-
     useEffect(() => {
-        if(state.fractionPref && state.fraction.denominator.toString().length > 4) {
+        if (state.fractionPref && state.fraction.denominator.toString().length > 4) {
             dispatch!({ type: "SET_FRACTIONPREF", payload: 0 })
         }
-        
     }, [])
 
     const switchAndReset = (index: number) => {
@@ -43,13 +40,12 @@ const TwoButtonGroup: FC<Props> = ({ buttons, clearForm }) => {
 
     const handleSwitch = (index: number) => {
         if (index === 0 && isNaN(parseInt(state.multiplier))) {
-
             Alert.alert(
                 "This Will Reset Your Current Odds",
                 "Would you like to continue?",
                 [
                     { text: "No", style: "cancel" },
-                    { text: "Yes", onPress: () => switchAndReset(index)}
+                    { text: "Yes", onPress: () => switchAndReset(index) }
                 ]
             )
             return;
@@ -71,45 +67,13 @@ const TwoButtonGroup: FC<Props> = ({ buttons, clearForm }) => {
     }
 
     return (
-        <ButtonGroup
-            buttons={buttons}
-            onPress={(newIndex: number) => handleSwitch(newIndex)}
+        <SegmentedPill
+            options={buttons}
             selectedIndex={state.fractionPref}
-            containerStyle={styles.container}
-            buttonStyle={styles.button}
-            textStyle={styles.text}
-            selectedButtonStyle={styles.selectedButton}
-            selectedTextStyle={styles.selectedText}
-            innerBorderStyle={{ color: "transparent" }}
+            onChange={handleSwitch}
+            width={280}
         />
     )
 }
 
 export default TwoButtonGroup
-
-const styles = StyleSheet.create({
-    container: {
-        padding: 2,
-        height: 32,
-        borderRadius: 9,
-        marginBottom: 20,
-        marginTop: 0
-    },
-    button: {
-        borderRadius: 7,
-        opacity: .5
-    },
-    text: {
-        fontFamily: "Futura",
-        fontSize: 15,
-        fontWeight: "bold",
-        color: "black"
-    },
-    selectedButton: {
-        backgroundColor: "white",
-        opacity: 1
-    },
-    selectedText: {
-        color: "black"
-    }
-})

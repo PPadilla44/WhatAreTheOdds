@@ -49,7 +49,7 @@ export const updateOddsPercent = (state: ClickerState, { title, oddsString }: { 
 
     const fractionWhole = new Fraction(oddsNum);
 
-    const fraction = { denominator: fractionWhole.d, numerator: fractionWhole.n };
+    const fraction = { denominator: Number(fractionWhole.d), numerator: Number(fractionWhole.n) };
 
     const tempState: ClickerState = { ...state, title, fraction, oddsString, fractionPref: 0, multiplier: "1" };
     const newState: ClickerState = reset(tempState);

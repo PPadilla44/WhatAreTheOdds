@@ -1,23 +1,60 @@
 import { SafeAreaProvider } from 'react-native-safe-area-context';
+import { GestureHandlerRootView } from 'react-native-gesture-handler';
+import { ActivityIndicator, View } from 'react-native';
+import {
+    useFonts as useLexend,
+    LexendDeca_400Regular,
+    LexendDeca_500Medium,
+    LexendDeca_600SemiBold,
+    LexendDeca_700Bold,
+} from '@expo-google-fonts/lexend-deca';
+import {
+    BricolageGrotesque_700Bold,
+    BricolageGrotesque_800ExtraBold,
+} from '@expo-google-fonts/bricolage-grotesque';
+
 import Navigation from './navigation';
 import { ClickerProvider } from './components/contexts/useClicker';
-import { OddsItemsProvider } from "./components/contexts/useOddsItems"
+import { OddsItemsProvider } from './components/contexts/useOddsItems';
 import { SettingsProvider } from './components/contexts/useSettings';
+import { StatsProvider } from './components/contexts/useStats';
+import Colors from './constants/Colors';
 
 
 export default function App() {
 
-  return (
-    <SafeAreaProvider>
+    const [fontsLoaded] = useLexend({
+        LexendDeca_400Regular,
+        LexendDeca_500Medium,
+        LexendDeca_600SemiBold,
+        LexendDeca_700Bold,
+        BricolageGrotesque_700Bold,
+        BricolageGrotesque_800ExtraBold,
+    });
 
-      <SettingsProvider>
-        <OddsItemsProvider>
-          <ClickerProvider>
-            <Navigation />
-          </ClickerProvider>
-        </OddsItemsProvider>
-      </SettingsProvider>
+    if (!fontsLoaded) {
+        return (
+            <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center', backgroundColor: Colors.dark.background }}>
+                <ActivityIndicator size="large" color={Colors.shared.primary} />
+            </View>
+        );
+    }
 
-    </SafeAreaProvider>
-  );
+    return (
+        <GestureHandlerRootView style={{ flex: 1 }}>
+            <SafeAreaProvider>
+
+                <SettingsProvider>
+                    <StatsProvider>
+                        <OddsItemsProvider>
+                            <ClickerProvider>
+                                <Navigation />
+                            </ClickerProvider>
+                        </OddsItemsProvider>
+                    </StatsProvider>
+                </SettingsProvider>
+
+            </SafeAreaProvider>
+        </GestureHandlerRootView>
+    );
 }

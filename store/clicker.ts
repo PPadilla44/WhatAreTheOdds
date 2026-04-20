@@ -4,10 +4,10 @@ export type BtnColorName = 'default' | 'lucky' | 'unlucky' | 'normal';
 
 
 export const BtnColorObj = {
-    unlucky :  "#830909",
-    lucky : "#007AFF",
-    normal : "#367FA3",
-    default : "#325C99"
+    unlucky : "#EF4444",   // rose-500 – missed / unlucky outcome
+    lucky   : "#10B981",   // emerald-500 – hit / lucky outcome
+    normal  : "#3B82F6",   // blue-500 – press feedback
+    default : "#2563EB"    // blue-600 – idle primary
 }
 
 export interface ClickerResults {

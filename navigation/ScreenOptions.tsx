@@ -1,36 +1,50 @@
 import { NativeStackNavigationOptions, NativeStackNavigationProp } from "@react-navigation/native-stack";
 import React from "react";
-import PressableIcon from "../components/PressableIcon";
-import Colors from "../constants/Colors";
-import { RootStackParamList } from "../types";
-import SimulateButton from "../components/SimulateButton";
 import { View } from "react-native";
-import { Button } from "react-native-elements";
+import PressableIcon from "../components/PressableIcon";
+import StatsChip from "../components/StatsChip";
+import KofiChip from "../components/KofiChip";
+import Colors from "../constants/Colors";
+import Fonts from "../constants/Fonts";
+import { RootStackParamList } from "../types";
 
-export const MainScreenOptions = (colorScheme: "light" | "dark", navigation: NativeStackNavigationProp<RootStackParamList>)
+export const MainScreenOptions = (colorScheme: "light" | "dark", _navigation: NativeStackNavigationProp<RootStackParamList, any>)
     : NativeStackNavigationOptions => ({
-        headerTitle: "",
+        headerTitle: () => (
+            <View style={{ flexDirection: "row", alignItems: "center", gap: 8 }}>
+                <StatsChip />
+                <KofiChip />
+            </View>
+        ),
+        headerTitleAlign: "center",
         headerStyle: { backgroundColor: Colors[colorScheme].background },
         headerShadowVisible: false,
-        headerRight: () =>
-            <View style={{ flexDirection: "row", width: 75, justifyContent: "space-between" }}>
-                <PressableIcon callBack={() => navigation.navigate('Settings')} name='gear' type='evilicon' size={32} />
-                <PressableIcon callBack={() => navigation.navigate('Modal')} name='plus' type='evilicon' size={32} />
-            </View>,
-        headerLeft: () => <SimulateButton />
-
+        headerLeft: () => null,
+        headerRight: () => null,
     })
 
-export const ModalScreenOptions = (colorScheme: "light" | "dark", navigation: NativeStackNavigationProp<RootStackParamList>)
+export const ModalScreenOptions = (colorScheme: "light" | "dark", navigation: NativeStackNavigationProp<RootStackParamList, any>)
     : NativeStackNavigationOptions => ({
-        headerTitle: "",
+        headerTitle: "New Odds",
+        headerTitleStyle: { fontFamily: Fonts.displayBold, fontSize: 17, color: colorScheme === "dark" ? Colors.dark.text : Colors.light.text },
         headerStyle: { backgroundColor: Colors[colorScheme].modal },
         headerShadowVisible: false,
-        headerLeft: () => <Button title="Cancel" titleStyle={{ color: Colors.shared.icon }} buttonStyle={{ padding: 0, backgroundColor: "" }} onPress={() => navigation.goBack()} />
+        headerLeft: () => (
+            <View style={{ paddingLeft: 10 }}>
+                <PressableIcon callBack={() => navigation.goBack()} name="x" size={18} />
+            </View>
+        )
     })
 
-export const SettingsScreenOptions = (colorScheme: "light" | "dark", navigation: NativeStackNavigationProp<RootStackParamList>)
-: NativeStackNavigationOptions => ({
-    headerTitle: "Settings",
-    headerLeft: () => <PressableIcon callBack={() => navigation.goBack()} name="arrowleft" size={32} type="antdesign" />
-})
+export const SettingsScreenOptions = (colorScheme: "light" | "dark", navigation: NativeStackNavigationProp<RootStackParamList, any>)
+    : NativeStackNavigationOptions => ({
+        headerTitle: "Settings",
+        headerTitleStyle: { fontFamily: Fonts.displayBold, fontSize: 17, color: colorScheme === "dark" ? Colors.dark.text : Colors.light.text },
+        headerStyle: { backgroundColor: Colors[colorScheme].background },
+        headerShadowVisible: false,
+        headerLeft: () => (
+            <View style={{ paddingLeft: 10 }}>
+                <PressableIcon callBack={() => navigation.goBack()} name="chevron-left" size={20} />
+            </View>
+        )
+    })

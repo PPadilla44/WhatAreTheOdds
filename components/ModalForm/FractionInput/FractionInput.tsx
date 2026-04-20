@@ -1,9 +1,8 @@
-import { StyleSheet } from 'react-native';
-import React, { FC, useState } from 'react';
-import { TextAsIcon } from '../../UI';
-import { TouchableOpacity, View, Text, Input } from '../../Themed';
-import Colors from '../../../constants/Colors';
-import MultiplierModal from './MultiplierModal';
+import { StyleSheet, Pressable, Text, TextInput, View } from 'react-native'
+import React, { FC, useState } from 'react'
+import Colors from '../../../constants/Colors'
+import Fonts from '../../../constants/Fonts'
+import MultiplierModal from './MultiplierModal'
 
 
 export interface Props {
@@ -15,54 +14,51 @@ export interface Props {
 
 const FractionInput: FC<Props> = ({ denominator, numerator, handleChanges, multiplier }) => {
 
-
     const [modalVisible, setModalVisible] = useState(false);
+    const [focus, setFocus] = useState<'num' | 'den' | null>(null);
 
+    const multLabel = multiplier === 'B' ? '× Billion'
+        : multiplier === 'M' ? '× Million'
+            : multiplier === '1' ? '× 1'
+                : `× ${multiplier}`;
 
     return (
         <>
-
-            <View style={{ flex: 2, backgroundColor: "transparent" }}>
-                <Input
+            <View style={[styles.card, focus && styles.cardFocused]}>
+                <TextInput
                     testID='numeratorInput'
+                    style={styles.numInput}
                     keyboardType="number-pad"
-                    style={styles.input}
-                    inputContainerStyle={styles.inputContainer}
-                    placeholder='1'
+                    placeholder="1"
+                    placeholderTextColor={Colors.light.mutedText}
                     maxLength={2}
                     value={numerator}
-                    onChangeText={numerator => handleChanges({ numerator })}
+                    onFocus={() => setFocus('num')}
+                    onBlur={() => setFocus(null)}
+                    onChangeText={(v) => handleChanges({ numerator: v })}
+                    selectTextOnFocus
                 />
-            </View>
-            <View style={{ marginHorizontal: 10, backgroundColor: "transparent", height: 52 }}>
-                <TextAsIcon style={{ fontSize: 48, fontWeight: "bold" }} text={'/'} />
-            </View>
-            <View style={{ flex: 3, backgroundColor: "transparent" }}>
-                <Input
+                <Text style={styles.slash}>/</Text>
+                <TextInput
                     testID='denominatorInput'
+                    style={styles.denInput}
                     keyboardType="number-pad"
-                    style={styles.input}
-                    inputContainerStyle={styles.inputContainer}
-                    placeholder='10'
+                    placeholder="4"
+                    placeholderTextColor={Colors.light.mutedText}
                     maxLength={4}
                     value={denominator}
-                    onChangeText={denominator => handleChanges({ denominator })}
+                    onFocus={() => setFocus('den')}
+                    onBlur={() => setFocus(null)}
+                    onChangeText={(v) => handleChanges({ denominator: v })}
+                    selectTextOnFocus
                 />
+                <Pressable
+                    onPress={() => setModalVisible(true)}
+                    style={({ pressed }) => [styles.multPill, { opacity: pressed ? 0.75 : 1 }]}
+                >
+                    <Text style={styles.multText}>{multLabel}</Text>
+                </Pressable>
             </View>
-            <TouchableOpacity darkColor={Colors.light.input} lightColor={Colors.dark.modal}
-                onPress={() => setModalVisible(true)}
-                containerStyle={{
-                    alignSelf: "center",
-                    alignItems: "center",
-                    justifyContent: "center",
-                    height: 35,
-                    marginHorizontal: 10,
-                    borderRadius: 5,
-                    width: 52,
-                }}
-            >
-                <Text darkColor={Colors.dark.modal} lightColor={Colors.light.input} style={{ fontSize: 18, fontWeight: "bold" }}>x {multiplier}</Text>
-            </TouchableOpacity>
 
             <MultiplierModal
                 modalVisible={modalVisible}
@@ -70,7 +66,6 @@ const FractionInput: FC<Props> = ({ denominator, numerator, handleChanges, multi
                 mult={multiplier}
                 handleChanges={handleChanges}
             />
-
         </>
     )
 }
@@ -78,19 +73,62 @@ const FractionInput: FC<Props> = ({ denominator, numerator, handleChanges, multi
 export default FractionInput
 
 const styles = StyleSheet.create({
-    input: {
-        borderRadius: 15,
-        fontSize: 48,
-        fontWeight: "bold",
-        fontFamily: "Futura",
-        textAlign: "center",
-        height: 52,
-        overflow: "visible"
+    card: {
+        flex: 1,
+        flexDirection: 'row',
+        alignItems: 'center',
+        justifyContent: 'center',
+        height: 72,
+        paddingHorizontal: 16,
+        backgroundColor: 'rgba(37,99,235,0.08)',
+        borderWidth: 1.5,
+        borderColor: 'rgba(37,99,235,0.22)',
+        borderRadius: 18,
+        gap: 8,
     },
-    inputContainer: {
-        borderBottomWidth: 0,
-        overflow: "visible"
+    cardFocused: {
+        borderColor: Colors.shared.primary,
+        backgroundColor: 'rgba(37,99,235,0.14)',
     },
-
-
+    numInput: {
+        minWidth: 52,
+        fontSize: 40,
+        fontFamily: Fonts.displayExtraBold,
+        color: '#FFFFFF',
+        textAlign: 'right',
+        letterSpacing: -1,
+        paddingVertical: 0,
+    },
+    slash: {
+        fontSize: 40,
+        fontFamily: Fonts.displayBold,
+        color: Colors.shared.primary,
+    },
+    denInput: {
+        minWidth: 70,
+        fontSize: 40,
+        fontFamily: Fonts.displayExtraBold,
+        color: '#FFFFFF',
+        textAlign: 'left',
+        letterSpacing: -1,
+        paddingVertical: 0,
+    },
+    multPill: {
+        marginLeft: 8,
+        paddingHorizontal: 12,
+        paddingVertical: 7,
+        borderRadius: 999,
+        backgroundColor: Colors.shared.primary,
+        shadowColor: Colors.shared.primary,
+        shadowOffset: { width: 0, height: 4 },
+        shadowOpacity: 0.3,
+        shadowRadius: 8,
+        elevation: 4,
+    },
+    multText: {
+        color: '#FFFFFF',
+        fontSize: 12,
+        fontFamily: Fonts.bodyBold,
+        letterSpacing: 0.4,
+    },
 })

@@ -3,6 +3,7 @@ import { Appearance } from "react-native";
 import { OddsItemInterface } from "../../types";
 import { OddsListState, Action } from "../oddsItems";
 import { SettingsState, Action as SAction, initialSettingsState, SettingsInterface, AppearanceName } from "../settings";
+import { Action as StatsAction, initialStatsState, StatsState } from "../stats";
 
 
 export const addItem = async (state: OddsListState, dispatch: React.Dispatch<Action> | undefined, payload: OddsItemInterface) => {
@@ -83,3 +84,53 @@ export const setAppearance = async (state: SettingsState, dispatch: React.Dispat
         console.log(err);
     }
 }
+
+// STATS
+export const fetchStats = async (dispatch: React.Dispatch<StatsAction> | undefined) => {
+    dispatch!({ type: "SET_FETCHING", payload: true });
+    try {
+        const data = await AsyncStorage.getItem("@Stats");
+        if (data) {
+            dispatch!({ type: "GET_STATE", payload: data });
+        } else {
+            dispatch!({ type: "GET_STATE", payload: JSON.stringify(initialStatsState.data) });
+        }
+    } catch (err) {
+        console.log(err);
+    } finally {
+        dispatch!({ type: "SET_FETCHING", payload: false });
+    }
+};
+
+export const recordHit = async (state: StatsState, dispatch: React.Dispatch<StatsAction> | undefined, clicks: number) => {
+    try {
+        dispatch!({ type: "RECORD_HIT", payload: { clicks } });
+        const next = {
+            totalHits: state.data.totalHits + 1,
+            bestClicks: state.data.bestClicks == null ? clicks : Math.min(state.data.bestClicks, clicks),
+        };
+        await AsyncStorage.setItem("@Stats", JSON.stringify(next));
+    } catch (err) {
+        console.log(err);
+    }
+};
+
+export const resetStats = async (dispatch: React.Dispatch<StatsAction> | undefined) => {
+    try {
+        dispatch!({ type: "RESET" });
+        await AsyncStorage.setItem("@Stats", JSON.stringify({ bestClicks: null, totalHits: 0 }));
+    } catch (err) {
+        console.log(err);
+    }
+};
+
+
+// ODDS LIST MAINTENANCE
+export const clearOddsList = async (dispatch: React.Dispatch<Action> | undefined) => {
+    try {
+        await AsyncStorage.removeItem("@OddsItems");
+        dispatch!({ type: "GET_STATE", payload: JSON.stringify([]) });
+    } catch (err) {
+        console.log(err);
+    }
+};
