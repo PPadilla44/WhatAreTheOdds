@@ -5,17 +5,9 @@ import { useClicker } from '../contexts/useClicker';
 import Colors from '../../constants/Colors';
 import Fonts from '../../constants/Fonts';
 
-/**
- * Cross-platform confirmation – React Native's `Alert` on web only renders
- * the message via `window.alert` (no OK/Cancel buttons), so on web we fall
- * back to `window.confirm`.
- */
 const confirm = (title: string, message: string, onYes: () => void) => {
     if (Platform.OS === 'web') {
-        // eslint-disable-next-line no-alert
-        if (typeof window !== 'undefined' && window.confirm(`${title}\n\n${message}`)) {
-            onYes();
-        }
+        if (typeof window !== 'undefined' && window.confirm(`${title}\n\n${message}`)) onYes();
         return;
     }
     Alert.alert(title, message, [
@@ -28,11 +20,6 @@ const ResetButton = () => {
 
     const { state, dispatch } = useClicker();
     const { didHit, loading, count } = state;
-
-    // Reset should be available whenever there's state to reset: either a hit
-    // has occurred, or clicks have accumulated. Previously it was gated only
-    // on `didHit`, making it appear broken (disabled) when the user just
-    // wanted to clear a tall click count.
     const enabled = !loading && (didHit || count > 0);
 
     const resetAll = () => dispatch!({ type: 'RESET' });
@@ -54,7 +41,7 @@ const ResetButton = () => {
                     pressed && enabled ? { opacity: 0.6 } : null,
                 ]}
             >
-                <Feather name="rotate-ccw" size={13} color={enabled ? Colors.light.danger : Colors.light.mutedText} />
+                <Feather name="rotate-ccw" size={12} color={enabled ? Colors.light.danger : Colors.light.mutedText} />
                 <Text style={[styles.text, { color: enabled ? Colors.light.danger : Colors.light.mutedText }]}>
                     Reset
                 </Text>
@@ -67,16 +54,15 @@ export default ResetButton;
 
 const styles = StyleSheet.create({
     wrap: {
-        position: 'absolute',
-        left: 16,
-        bottom: 20,
+        marginTop: 12,
+        alignItems: 'center',
     },
     btn: {
         flexDirection: 'row',
         alignItems: 'center',
-        gap: 6,
-        paddingHorizontal: 14,
-        paddingVertical: 8,
+        gap: 5,
+        paddingHorizontal: 12,
+        paddingVertical: 6,
         borderRadius: 999,
         borderWidth: 1,
     },
@@ -87,12 +73,12 @@ const styles = StyleSheet.create({
     btnDisabled: {
         backgroundColor: 'rgba(148,163,184,0.08)',
         borderColor: 'rgba(148,163,184,0.18)',
-        opacity: 0.6,
+        opacity: 0.5,
     },
     text: {
         fontFamily: Fonts.bodyBold,
-        fontSize: 12,
-        letterSpacing: 1.4,
+        fontSize: 11,
+        letterSpacing: 1.2,
         textTransform: 'uppercase',
     },
 });

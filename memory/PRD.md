@@ -29,6 +29,11 @@ percent input modes, saved odds presets, and a simulate mode that auto-presses.
 
 ## What's Been Implemented
 
+### 2026-02 – Main screen layout fix
+- Fixed Reset button overlapping the Percent/Fraction segmented pill on web export.
+- Fixed Main circular button rendering as an ellipse (flexbox stretching on web).
+- Verified via screenshot: button is perfectly circular, reset sits cleanly below pill.
+
 ### 2026-01 – Modern visual refresh
 - New blue-accent design token palette (`/app/constants/Colors.ts`) with semantic keys:
   `surface`, `surfaceAlt`, `border`, `mutedText`, `success`, `danger`,

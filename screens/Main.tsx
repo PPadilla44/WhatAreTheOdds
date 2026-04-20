@@ -76,9 +76,9 @@ const Main: FC<RootTabScreenProps<"Play">> = ({ }) => {
                         width={260}
                     />
                 </View>
-            </View>
 
-            <ResetButton />
+                <ResetButton />
+            </View>
 
         </View>
     )
