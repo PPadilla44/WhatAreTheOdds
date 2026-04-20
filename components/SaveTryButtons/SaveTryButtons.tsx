@@ -1,11 +1,12 @@
-import { StyleSheet } from 'react-native';
+import { StyleSheet, Pressable, Text, View } from 'react-native';
+import { Feather } from '@expo/vector-icons';
 import React, { FC } from 'react';
-import { Text, TouchableOpacity, View } from "../Themed";
 import Colors from '../../constants/Colors';
+import Fonts from '../../constants/Fonts';
 
 
 interface Props {
-    showTry: boolean
+    showTry: boolean;
     handleTry: () => void;
     handleSave: () => void;
 }
@@ -15,32 +16,33 @@ const SaveTryButtons: FC<Props> = ({ showTry, handleSave, handleTry }) => {
 
     return (
         <View style={styles.container}>
-
-            <TouchableOpacity testID='saveBtn'
+            <Pressable
+                testID='saveBtn'
+                onPress={handleSave}
                 disabled={!showTry}
-                lightColor={showTry ? Colors.shared.primaryDeep : Colors.light.input}
-                darkColor={showTry ? Colors.shared.primaryDeep : Colors.dark.input}
-                containerStyle={[styles.saveBtn, { opacity: showTry ? 1 : .5 }]}
-                onPress={handleSave}>
-                <Text style={styles.saveText}>Save</Text>
-            </TouchableOpacity>
+                style={({ pressed }) => [
+                    styles.saveBtn,
+                    !showTry && styles.btnDisabled,
+                    pressed && showTry ? { opacity: 0.75 } : null,
+                ]}
+            >
+                <Feather name="bookmark" size={16} color={showTry ? Colors.shared.primary : Colors.light.mutedText} />
+                <Text style={[styles.saveText, { color: showTry ? Colors.shared.primary : Colors.light.mutedText }]}>Save</Text>
+            </Pressable>
 
-            <TouchableOpacity
+            <Pressable
                 testID='tryBtn'
-                lightColor={showTry ? Colors.shared.primary : Colors.light.input}
-                darkColor={showTry ? Colors.shared.primary : Colors.dark.input}
-                containerStyle={styles.tryBtn}
                 onPress={handleTry}
                 disabled={!showTry}
+                style={({ pressed }) => [
+                    styles.tryBtn,
+                    !showTry && styles.btnDisabled,
+                    pressed && showTry ? { opacity: 0.88, transform: [{ scale: 0.98 }] } : null,
+                ]}
             >
-                <Text
-                    lightColor={showTry ? "white" : Colors.light.mutedText}
-                    darkColor={showTry ? "white" : Colors.dark.mutedText}
-                    style={[styles.tryText, { opacity: showTry ? 1 : .6 }]} >
-                    Try it
-                </Text>
-            </TouchableOpacity>
-
+                <Feather name="target" size={16} color="#FFFFFF" />
+                <Text style={styles.tryText}>Try it</Text>
+            </Pressable>
         </View>
     )
 }
@@ -50,40 +52,48 @@ export default SaveTryButtons
 const styles = StyleSheet.create({
     container: {
         flexDirection: "row",
-        height: 60,
-        backgroundColor: "transparent",
-        marginHorizontal: 10,
-        gap: 12,
-    },
-    tryBtn: {
-        flex: 2,
-        alignItems: "center",
-        justifyContent: "center",
-        borderRadius: 16,
-        overflow: "hidden",
-        shadowColor: Colors.shared.primary,
-        shadowOffset: { width: 0, height: 8 },
-        shadowOpacity: 0.25,
-        shadowRadius: 14,
-        elevation: 6,
-    },
-    tryText: {
-        fontSize: 22,
-        fontWeight: "700",
-        color: "white",
-        letterSpacing: 0.4,
+        marginHorizontal: 14,
+        gap: 10,
     },
     saveBtn: {
         flex: 1,
+        flexDirection: 'row',
         alignItems: "center",
         justifyContent: "center",
+        gap: 8,
+        height: 54,
         borderRadius: 16,
-        overflow: "hidden",
+        borderWidth: 1.5,
+        borderColor: 'rgba(37,99,235,0.28)',
+        backgroundColor: 'rgba(37,99,235,0.08)',
     },
     saveText: {
-        color: "white",
-        fontSize: 22,
-        fontWeight: "700",
+        fontSize: 15,
+        fontFamily: Fonts.bodyBold,
         letterSpacing: 0.4,
-    }
+    },
+    tryBtn: {
+        flex: 2,
+        flexDirection: 'row',
+        alignItems: "center",
+        justifyContent: "center",
+        gap: 10,
+        height: 54,
+        borderRadius: 16,
+        backgroundColor: Colors.shared.primary,
+        shadowColor: Colors.shared.primary,
+        shadowOffset: { width: 0, height: 8 },
+        shadowOpacity: 0.35,
+        shadowRadius: 14,
+        elevation: 8,
+    },
+    tryText: {
+        color: "#FFFFFF",
+        fontSize: 16,
+        fontFamily: Fonts.bodyBold,
+        letterSpacing: 0.4,
+    },
+    btnDisabled: {
+        opacity: 0.5,
+    },
 })
