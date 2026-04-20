@@ -4,9 +4,8 @@ import { Feather } from '@expo/vector-icons';
 import { LinearGradient } from 'expo-linear-gradient';
 import Fonts from '../constants/Fonts';
 
-// TODO: Replace `YOUR_HANDLE` with your actual Ko-fi username before shipping.
-// Example: "https://ko-fi.com/janedoe"
-export const KOFI_URL = 'https://ko-fi.com/YOUR_HANDLE';
+// Ko-fi page for this app's creator.
+export const KOFI_URL = 'https://ko-fi.com/pablopadilla';
 
 /**
  * Big, joyful Ko-fi support button. Uses Ko-fi's warm pink/red brand palette
