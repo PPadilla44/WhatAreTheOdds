@@ -1,4 +1,5 @@
 import { SafeAreaProvider } from 'react-native-safe-area-context';
+import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import { ActivityIndicator, View } from 'react-native';
 import {
     useFonts as useLexend,
@@ -40,18 +41,20 @@ export default function App() {
     }
 
     return (
-        <SafeAreaProvider>
+        <GestureHandlerRootView style={{ flex: 1 }}>
+            <SafeAreaProvider>
 
-            <SettingsProvider>
-                <StatsProvider>
-                    <OddsItemsProvider>
-                        <ClickerProvider>
-                            <Navigation />
-                        </ClickerProvider>
-                    </OddsItemsProvider>
-                </StatsProvider>
-            </SettingsProvider>
+                <SettingsProvider>
+                    <StatsProvider>
+                        <OddsItemsProvider>
+                            <ClickerProvider>
+                                <Navigation />
+                            </ClickerProvider>
+                        </OddsItemsProvider>
+                    </StatsProvider>
+                </SettingsProvider>
 
-        </SafeAreaProvider>
+            </SafeAreaProvider>
+        </GestureHandlerRootView>
     );
 }
