@@ -187,7 +187,9 @@ const ModalForm: FC<Props> = ({ navigation }) => {
                 }
             </View>
 
-            <TwoButtonGroup clearForm={clearForm} buttons={buttons} />
+            <View style={styles.pillWrap}>
+                <TwoButtonGroup clearForm={clearForm} buttons={buttons} />
+            </View>
 
             <View style={styles.titleContainer}>
                 <Input
@@ -238,6 +240,12 @@ const styles = StyleSheet.create({
         height: 56,
         marginBottom: 26,
         backgroundColor: "transparent"
+    },
+    pillWrap: {
+        marginTop: 6,
+        marginBottom: 28,
+        alignItems: "center",
+        backgroundColor: "transparent",
     }
 
 })

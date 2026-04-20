@@ -1,28 +1,45 @@
-import { Alert, StyleSheet, Pressable, Text, View } from 'react-native';
+import { Alert, Platform, StyleSheet, Pressable, Text, View } from 'react-native';
 import { Feather } from '@expo/vector-icons';
 import React from 'react';
 import { useClicker } from '../contexts/useClicker';
 import Colors from '../../constants/Colors';
 import Fonts from '../../constants/Fonts';
 
+/**
+ * Cross-platform confirmation – React Native's `Alert` on web only renders
+ * the message via `window.alert` (no OK/Cancel buttons), so on web we fall
+ * back to `window.confirm`.
+ */
+const confirm = (title: string, message: string, onYes: () => void) => {
+    if (Platform.OS === 'web') {
+        // eslint-disable-next-line no-alert
+        if (typeof window !== 'undefined' && window.confirm(`${title}\n\n${message}`)) {
+            onYes();
+        }
+        return;
+    }
+    Alert.alert(title, message, [
+        { text: 'No', style: 'cancel' },
+        { text: 'Yes', style: 'destructive', onPress: onYes },
+    ]);
+};
+
 const ResetButton = () => {
 
     const { state, dispatch } = useClicker();
-    const { didHit, loading } = state;
-    const enabled = didHit && !loading;
+    const { didHit, loading, count } = state;
+
+    // Reset should be available whenever there's state to reset: either a hit
+    // has occurred, or clicks have accumulated. Previously it was gated only
+    // on `didHit`, making it appear broken (disabled) when the user just
+    // wanted to clear a tall click count.
+    const enabled = !loading && (didHit || count > 0);
 
     const resetAll = () => dispatch!({ type: 'RESET' });
 
     const handlePress = () => {
         if (!enabled) return;
-        Alert.alert(
-            "Reset",
-            "Are you sure you would like to reset?",
-            [
-                { text: "No", style: "cancel" },
-                { text: "Yes", style: "destructive", onPress: resetAll },
-            ]
-        );
+        confirm('Reset', 'Are you sure you would like to reset?', resetAll);
     };
 
     return (

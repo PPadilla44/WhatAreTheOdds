@@ -123,3 +123,14 @@ export const resetStats = async (dispatch: React.Dispatch<StatsAction> | undefin
         console.log(err);
     }
 };
+
+
+// ODDS LIST MAINTENANCE
+export const clearOddsList = async (dispatch: React.Dispatch<Action> | undefined) => {
+    try {
+        await AsyncStorage.removeItem("@OddsItems");
+        dispatch!({ type: "GET_STATE", payload: JSON.stringify([]) });
+    } catch (err) {
+        console.log(err);
+    }
+};
