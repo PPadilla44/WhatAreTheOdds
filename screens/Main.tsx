@@ -5,7 +5,6 @@ import SubContainer from '../components/SubContainer';
 import ResetButton from '../components/ResetButton';
 import MainButton from '../components/MainButton';
 import BackgroundAmbient from '../components/BackgroundAmbient';
-import BottomActionBar from '../components/BottomActionBar';
 import SegmentedPill from '../components/SegmentedPill';
 import { useClicker } from '../components/contexts/useClicker';
 import { useSettings } from '../components/contexts/useSettings';
@@ -15,7 +14,7 @@ import { RootTabScreenProps } from '../types';
 import Fonts from '../constants/Fonts';
 
 
-const Main: FC<RootTabScreenProps<"Root">> = ({ }) => {
+const Main: FC<RootTabScreenProps<"Play">> = ({ }) => {
 
     const { state, dispatch } = useClicker();
     const { state: settings } = useSettings();
@@ -80,7 +79,6 @@ const Main: FC<RootTabScreenProps<"Root">> = ({ }) => {
             </View>
 
             <ResetButton />
-            <BottomActionBar />
 
         </View>
     )
@@ -94,7 +92,7 @@ const styles = StyleSheet.create({
         alignItems: "center",
         justifyContent: "space-between",
         paddingTop: 12,
-        paddingBottom: 96,
+        paddingBottom: 24,
         paddingHorizontal: 20,
     },
     topSection: {

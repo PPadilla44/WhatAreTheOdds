@@ -31,7 +31,7 @@ const OddsItem: FC<Props> = ({ item }) => {
 
     const setDisplay = (oddItem: OddsItemInterface) => {
         cDispatch!({ type: 'SET_DISPLAY', payload: oddItem })
-        navigation.goBack();
+        navigation.navigate('Play' as never);
     }
 
     const oddsLabel = item.multiplier === "B" || item.multiplier === "M" ?

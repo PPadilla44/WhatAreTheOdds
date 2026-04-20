@@ -2,7 +2,7 @@ import React, { FC, useMemo } from 'react';
 import { Platform, Pressable, ScrollView, StyleSheet, Text, View, Alert, Linking } from 'react-native';
 import { Feather } from '@expo/vector-icons';
 
-import { RootStackScreenProps } from '../types';
+import { RootTabScreenProps } from '../types';
 import Colors from '../constants/Colors';
 import Fonts from '../constants/Fonts';
 
@@ -28,7 +28,7 @@ const confirm = (title: string, message: string, onYes: () => void) => {
     ]);
 };
 
-const Settings: FC<RootStackScreenProps<"Settings">> = ({ }) => {
+const Settings: FC<RootTabScreenProps<"Settings">> = ({ }) => {
 
     const { state: settings, dispatch: settingsDispatch } = useSettings();
     const { state: stats, dispatch: statsDispatch } = useStats();

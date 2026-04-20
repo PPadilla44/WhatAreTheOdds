@@ -69,7 +69,7 @@ const styles = StyleSheet.create({
     wrap: {
         position: 'absolute',
         left: 16,
-        bottom: 78,
+        bottom: 20,
     },
     btn: {
         flexDirection: 'row',

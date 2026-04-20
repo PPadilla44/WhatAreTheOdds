@@ -9,15 +9,11 @@ const linking: LinkingOptions<RootStackParamList> = {
         screens: {
             Root: {
                 screens: {
-                    Main: {
-                        screens: {
-                            Main: 'Main',
-                            Settings: "Settings"
-                        },
-                    },
+                    Play: '',
+                    New: 'new',
+                    Settings: 'settings',
                 },
             },
-            Modal: 'modal',
             NotFound: '*',
         },
     },

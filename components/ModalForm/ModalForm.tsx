@@ -1,11 +1,12 @@
 import { StyleSheet, Text, TextInput, View } from 'react-native';
 import { Feather } from '@expo/vector-icons';
 import React, { FC, useMemo, useState } from 'react';
-import { NativeStackNavigationProp } from '@react-navigation/native-stack';
+
+import { BottomTabNavigationProp } from '@react-navigation/bottom-tabs';
 
 import Colors from '../../constants/Colors';
 import Fonts from '../../constants/Fonts';
-import { OddsItemInterface, RootStackParamList } from '../../types';
+import { OddsItemInterface, RootTabParamList } from '../../types';
 import { useClicker } from '../contexts/useClicker';
 import { useOddsItems } from '../contexts/useOddsItems';
 import { addItem } from '../../store/utils/thunkerFunctions';
@@ -26,7 +27,7 @@ export function generateUUID(digits = 15) {
 }
 
 interface Props {
-    navigation: NativeStackNavigationProp<RootStackParamList, any>;
+    navigation: BottomTabNavigationProp<RootTabParamList, any>;
 }
 
 const ModalForm: FC<Props> = ({ navigation }) => {
@@ -171,7 +172,8 @@ const ModalForm: FC<Props> = ({ navigation }) => {
                 payload: { title: formData.title, oddsString: formData.oddsString, multiplier: formData.multiplier },
             });
         }
-        navigation.goBack();
+        // Switch back to the Play tab so the user sees their new odds active.
+        navigation.navigate('Play' as never);
     };
 
     const handleSave = async () => {

@@ -13,7 +13,7 @@ import Colors from '../constants/Colors';
 import Fonts from '../constants/Fonts';
 
 
-const Dropdown = (props: RootTabScreenProps<"Modal">) => {
+const Dropdown = (props: RootTabScreenProps<"New">) => {
 
     const { state: oState, dispatch: oDispatch } = useOddsItems();
 
@@ -26,10 +26,6 @@ const Dropdown = (props: RootTabScreenProps<"Modal">) => {
     return (
         <View style={styles.container}>
             <StatusBar style={Platform.OS === 'ios' ? 'light' : 'auto'} />
-
-            <View style={styles.handleWrap}>
-                <View style={styles.handle} />
-            </View>
 
             <ScrollView
                 darkColor={Colors.dark.modal}

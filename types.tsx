@@ -1,5 +1,6 @@
 import { NavigatorScreenParams } from '@react-navigation/native';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
+import { BottomTabScreenProps } from '@react-navigation/bottom-tabs';
 
 export interface OddsItemInterface {
     id: string
@@ -19,10 +20,12 @@ declare global {
     }
 }
 
+// Root stack – wraps the tab navigator + NotFound
 export type RootStackParamList = {
     Root: NavigatorScreenParams<RootTabParamList> | undefined;
-    Modal: undefined;
     NotFound: undefined;
+    // Legacy keys kept for backwards compat with navigation calls
+    Modal: undefined;
     Settings: undefined;
 };
 
@@ -32,10 +35,11 @@ export type RootStackScreenProps<Screen extends keyof RootStackParamList> = Nati
 >;
 
 
+// Bottom tabs
 export type RootTabParamList = {
-    Main: undefined;
-    Modal: undefined;
+    Play: undefined;
+    New: undefined;
     Settings: undefined;
 };
 
-export type RootTabScreenProps<Screen extends keyof RootStackParamList> = NativeStackScreenProps<RootStackParamList, Screen>;
+export type RootTabScreenProps<Screen extends keyof RootTabParamList> = BottomTabScreenProps<RootTabParamList, Screen>;
