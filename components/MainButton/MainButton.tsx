@@ -65,7 +65,8 @@ const styles = StyleSheet.create({
         bottom: 10,
         borderRadius: (SIZE - 20) / 2,
         borderWidth: 1,
-        borderColor: "rgba(255,255,255,0.18)",
+        borderColor: "rgba(255,255,255,0.2)",
+        backgroundColor: "transparent",
     },
     btnText: {
         fontSize: 30,

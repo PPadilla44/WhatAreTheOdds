@@ -1,0 +1,11 @@
+{
+  "name": "frontend-proxy",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Emergent preview wrapper — serves the Expo web export on port 3000. Run `yarn build` inside /app to regenerate the bundle.",
+  "scripts": {
+    "prestart": "cd /app && node ./frontend/ensure-build.js",
+    "start": "/app/node_modules/.bin/serve -s /app/dist -l tcp://0.0.0.0:3000 --no-clipboard --single",
+    "build": "cd /app && npx expo export --platform web"
+  }
+}

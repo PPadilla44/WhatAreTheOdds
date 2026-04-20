@@ -72,6 +72,20 @@ percent input modes, saved odds presets, and a simulate mode that auto-presses.
   any icons render as blanks on device).
 
 ## How to Run
+
+### In the Emergent preview
+The app is now wired up to the Emergent preview URL automatically:
+- `/app/dist` holds the built Expo Web bundle (via `npx expo export --platform web`).
+- `/app/frontend/package.json` runs `serve -s /app/dist -l 3000` under supervisor
+  (with `ensure-build.js` auto-regenerating the bundle if missing).
+- `/app/backend/server.py` is a minimal FastAPI stub exposing `/api/health` on port
+  8001 so the required supervisor program stays RUNNING (this app has no real backend).
+- After code edits, regenerate the preview bundle:
+  ```sh
+  cd /app && rm -rf dist && npx expo export --platform web && sudo supervisorctl restart frontend
+  ```
+
+### Locally on a device / simulator
 ```sh
 cd /app
 yarn install
