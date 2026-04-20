@@ -1,11 +1,7 @@
-import { StyleSheet } from 'react-native'
+import { Alert } from 'react-native'
 import React, { FC, useEffect } from 'react'
-import { ButtonGroup } from '../Themed'
 import { useClicker } from '../contexts/useClicker';
-import { Alert } from 'react-native';
-import Colors from '../../constants/Colors';
-
-import Fonts from '../../constants/Fonts';
+import SegmentedPill from '../SegmentedPill';
 
 interface Props {
     buttons: any[];
@@ -23,12 +19,10 @@ const TwoButtonGroup: FC<Props> = ({ buttons, clearForm }) => {
 
     const { state, dispatch } = useClicker();
 
-
     useEffect(() => {
         if (state.fractionPref && state.fraction.denominator.toString().length > 4) {
             dispatch!({ type: "SET_FRACTIONPREF", payload: 0 })
         }
-
     }, [])
 
     const switchAndReset = (index: number) => {
@@ -46,7 +40,6 @@ const TwoButtonGroup: FC<Props> = ({ buttons, clearForm }) => {
 
     const handleSwitch = (index: number) => {
         if (index === 0 && isNaN(parseInt(state.multiplier))) {
-
             Alert.alert(
                 "This Will Reset Your Current Odds",
                 "Would you like to continue?",
@@ -74,49 +67,13 @@ const TwoButtonGroup: FC<Props> = ({ buttons, clearForm }) => {
     }
 
     return (
-        <ButtonGroup
-            buttons={buttons}
-            onPress={(newIndex: number) => handleSwitch(newIndex)}
+        <SegmentedPill
+            options={buttons}
             selectedIndex={state.fractionPref}
-            containerStyle={styles.container}
-            buttonStyle={styles.button}
-            textStyle={styles.text}
-            selectedButtonStyle={styles.selectedButton}
-            selectedTextStyle={styles.selectedText}
-            innerBorderStyle={{ color: "transparent" }}
+            onChange={handleSwitch}
+            width={280}
         />
     )
 }
 
 export default TwoButtonGroup
-
-const styles = StyleSheet.create({
-    container: {
-        padding: 4,
-        height: 40,
-        borderRadius: 14,
-        marginBottom: 24,
-        marginTop: 0,
-        marginHorizontal: 14,
-        borderWidth: 0,
-    },
-    button: {
-        borderRadius: 10,
-        backgroundColor: "transparent",
-    },
-    text: {
-        fontFamily: Fonts.bodyBold,
-        fontSize: 14,
-        fontWeight: "600",
-        letterSpacing: 0.5,
-        color: Colors.light.mutedText,
-    },
-    selectedButton: {
-        backgroundColor: Colors.shared.primary,
-        borderRadius: 10,
-    },
-    selectedText: {
-        color: "white",
-        fontWeight: "700",
-    }
-})

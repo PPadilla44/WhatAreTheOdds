@@ -16,6 +16,7 @@ import Navigation from './navigation';
 import { ClickerProvider } from './components/contexts/useClicker';
 import { OddsItemsProvider } from './components/contexts/useOddsItems';
 import { SettingsProvider } from './components/contexts/useSettings';
+import { StatsProvider } from './components/contexts/useStats';
 import Colors from './constants/Colors';
 
 
@@ -42,11 +43,13 @@ export default function App() {
         <SafeAreaProvider>
 
             <SettingsProvider>
-                <OddsItemsProvider>
-                    <ClickerProvider>
-                        <Navigation />
-                    </ClickerProvider>
-                </OddsItemsProvider>
+                <StatsProvider>
+                    <OddsItemsProvider>
+                        <ClickerProvider>
+                            <Navigation />
+                        </ClickerProvider>
+                    </OddsItemsProvider>
+                </StatsProvider>
             </SettingsProvider>
 
         </SafeAreaProvider>

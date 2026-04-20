@@ -1,14 +1,16 @@
 import { StyleSheet } from 'react-native';
-import { ButtonGroup, View } from "../components/Themed";
-import React, { FC } from 'react';
+import { View } from "../components/Themed";
+import React, { FC, useEffect, useRef } from 'react';
 import SubContainer from '../components/SubContainer';
 import ResetButton from '../components/ResetButton';
 import MainButton from '../components/MainButton';
 import BackgroundAmbient from '../components/BackgroundAmbient';
+import SegmentedPill from '../components/SegmentedPill';
 import { useClicker } from '../components/contexts/useClicker';
 import { useSettings } from '../components/contexts/useSettings';
+import { useStats } from '../components/contexts/useStats';
+import { recordHit } from '../store/utils/thunkerFunctions';
 import { RootTabScreenProps } from '../types';
-import Colors from '../constants/Colors';
 import Fonts from '../constants/Fonts';
 
 
@@ -16,10 +18,22 @@ const Main: FC<RootTabScreenProps<"Root">> = ({ }) => {
 
     const { state, dispatch } = useClicker();
     const { state: settings } = useSettings();
-    const { count, oddsString, title, fraction, multiplier, fractionPref } = state;
+    const { state: stats, dispatch: statsDispatch } = useStats();
+    const { count, oddsString, title, fraction, multiplier, fractionPref, didHit } = state;
     const { numerator, denominator } = fraction;
 
     const theme = (settings.data.appearance.appearance as 'light' | 'dark') ?? 'dark';
+
+    // Record a hit into persistent stats once, when didHit flips true
+    const prevHit = useRef(false);
+    useEffect(() => {
+        if (didHit && !prevHit.current) {
+            recordHit(stats, statsDispatch, count);
+        }
+        prevHit.current = didHit;
+    }, [didHit, count]);
+
+    const probDisabled = multiplier === "B" || multiplier === "M";
 
     return (
         <View testID='Main' style={styles.container}>
@@ -40,7 +54,7 @@ const Main: FC<RootTabScreenProps<"Root">> = ({ }) => {
             <View style={styles.bottomSection} darkColor="transparent" lightColor="transparent">
                 <SubContainer
                     text={
-                        multiplier === "B" || multiplier === "M" ?
+                        probDisabled ?
                             `${numerator} / ${denominator} ${multiplier}`
                             :
                             fractionPref ?
@@ -52,20 +66,16 @@ const Main: FC<RootTabScreenProps<"Root">> = ({ }) => {
                     title={title}
                 />
 
-                <ButtonGroup
-                    buttons={["Percent", "Fraction"]}
-                    onPress={(newIndex: number) => dispatch!({ type: "SET_FRACTIONPREF", payload: newIndex })}
-                    selectedIndex={multiplier === "B" || multiplier === "M" ? 1 : fractionPref}
-                    containerStyle={styles.btnContainer}
-                    buttonStyle={styles.btn}
-                    textStyle={styles.btnText}
-                    selectedButtonStyle={styles.selectedBtn}
-                    selectedTextStyle={styles.btnSelectedText}
-                    disabled={multiplier === "B" || multiplier === "M"}
-                    disabledSelectedTextStyle={{ color: Colors.shared.primary }}
-                    disabledSelectedStyle={{ backgroundColor: "transparent" }}
-                    innerBorderStyle={{ color: "transparent" }}
-                />
+                <View style={styles.toggleWrap} darkColor="transparent" lightColor="transparent">
+                    <SegmentedPill
+                        testID="percent-fraction-toggle"
+                        options={["Percent", "Fraction"]}
+                        selectedIndex={probDisabled ? 1 : fractionPref}
+                        disabled={probDisabled}
+                        onChange={(newIndex) => dispatch!({ type: "SET_FRACTIONPREF", payload: newIndex })}
+                        width={260}
+                    />
+                </View>
             </View>
 
             <ResetButton />
@@ -100,6 +110,9 @@ const styles = StyleSheet.create({
         justifyContent: "center",
         width: "100%",
     },
+    toggleWrap: {
+        marginTop: 18,
+    },
     clickAmnt: {
         fontSize: 80,
         fontFamily: Fonts.displayExtraBold,
@@ -112,28 +125,4 @@ const styles = StyleSheet.create({
         fontFamily: Fonts.displayBold,
         letterSpacing: -1,
     },
-    btnContainer: {
-        height: 30,
-        marginTop: 14,
-        borderColor: "transparent",
-        backgroundColor: "transparent",
-        width: 260,
-    },
-    btn: {
-        backgroundColor: "transparent",
-    },
-    btnText: {
-        fontFamily: Fonts.bodySemiBold,
-        fontSize: 12,
-        letterSpacing: 2.2,
-        color: Colors.light.mutedText,
-        textTransform: "uppercase",
-    },
-    selectedBtn: {
-        backgroundColor: "transparent",
-    },
-    btnSelectedText: {
-        color: Colors.shared.primary,
-        fontFamily: Fonts.bodyBold,
-    }
 })
