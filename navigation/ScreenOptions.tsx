@@ -4,13 +4,19 @@ import { View } from "react-native";
 import PressableIcon from "../components/PressableIcon";
 import SimulateButton from "../components/SimulateButton";
 import StatsChip from "../components/StatsChip";
+import KofiChip from "../components/KofiChip";
 import Colors from "../constants/Colors";
 import Fonts from "../constants/Fonts";
 import { RootStackParamList } from "../types";
 
 export const MainScreenOptions = (colorScheme: "light" | "dark", navigation: NativeStackNavigationProp<RootStackParamList, any>)
     : NativeStackNavigationOptions => ({
-        headerTitle: () => <StatsChip />,
+        headerTitle: () => (
+            <View style={{ flexDirection: "row", alignItems: "center", gap: 8 }}>
+                <StatsChip />
+                <KofiChip />
+            </View>
+        ),
         headerTitleAlign: "center",
         headerStyle: { backgroundColor: Colors[colorScheme].background },
         headerShadowVisible: false,
