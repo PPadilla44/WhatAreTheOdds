@@ -19,16 +19,25 @@
     ],
     "ios": {
       "supportsTablet": true,
-      "bundleIdentifier": "com.ppadilla44.WhatAreTheOdds"
+      "bundleIdentifier": "com.ppadilla44.WhatAreTheOdds",
+      "infoPlist": {
+        "ITSAppUsesNonExemptEncryption": false
+      }
     },
     "android": {
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#325C99"
-      }
+      },
+      "package": "com.ppadilla44.WhatAreTheOdds"
     },
     "web": {
       "favicon": "./assets/favicon.png"
+    },
+    "extra": {
+      "eas": {
+        "projectId": "10df38b9-d49a-44da-bd8c-9d7e1f8c943c"
+      }
     }
   }
 }
