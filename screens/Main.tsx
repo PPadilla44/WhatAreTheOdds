@@ -26,7 +26,7 @@ const Main: FC<RootTabScreenProps<"Main">> = ({ }) => {
 
             <MainButton />
 
-            <View style={{ alignItems: "center", justifyContent: "center" }}>
+            <View style={styles.bottomSection}>
 
                 <SubContainer
                     text={
@@ -44,7 +44,7 @@ const Main: FC<RootTabScreenProps<"Main">> = ({ }) => {
 
                 <ButtonGroup
                     buttons={["Percent", "Fraction"]}
-                    onPress={(newIndex: number) => dispatch!({type: "SET_FRACTIONPREF", payload: newIndex})}
+                    onPress={(newIndex: number) => dispatch!({ type: "SET_FRACTIONPREF", payload: newIndex })}
                     selectedIndex={multiplier === "B" || multiplier === "M" ? 1 : fractionPref}
                     containerStyle={styles.btnContainer}
                     buttonStyle={styles.btn}
@@ -52,8 +52,9 @@ const Main: FC<RootTabScreenProps<"Main">> = ({ }) => {
                     selectedButtonStyle={styles.selectedBtn}
                     selectedTextStyle={styles.btnSelectedText}
                     disabled={multiplier === "B" || multiplier === "M"}
-                    disabledSelectedTextStyle={{ color: Colors.shared.icon }}
+                    disabledSelectedTextStyle={{ color: Colors.shared.primary }}
                     disabledSelectedStyle={{ backgroundColor: "transparent" }}
+                    innerBorderStyle={{ color: "transparent" }}
                 />
             </View>
 
@@ -70,40 +71,49 @@ const styles = StyleSheet.create({
         flex: 1,
         alignItems: "center",
         justifyContent: "space-around",
+        paddingHorizontal: 20,
+    },
+    bottomSection: {
+        alignItems: "center",
+        justifyContent: "center",
+        width: "100%",
     },
     clickAmnt: {
-        fontWeight: "bold",
-        fontSize: 64,
-        fontFamily: "Futura"
+        fontWeight: "800",
+        fontSize: 72,
+        fontFamily: "Futura",
+        letterSpacing: -2,
     },
     probText: {
-        fontWeight: "bold",
-        fontSize: 48,
+        fontWeight: "700",
+        fontSize: 44,
         textAlign: "center",
-        fontFamily: "Futura"
+        fontFamily: "Futura",
+        letterSpacing: -0.5,
     },
     btnContainer: {
-        height: 20,
-        marginTop: 0,
+        height: 26,
+        marginTop: 10,
         borderColor: "transparent",
         backgroundColor: "transparent",
-        width: 250,
+        width: 240,
     },
     btn: {
-        opacity: .5
+        backgroundColor: "transparent",
     },
     btnText: {
         fontFamily: "Futura",
-        fontSize: 15,
-        letterSpacing: 1.2,
-        fontWeight: "bold",
-        color: Colors.dark.input
+        fontSize: 13,
+        letterSpacing: 1.6,
+        fontWeight: "600",
+        color: Colors.light.mutedText,
+        textTransform: "uppercase",
     },
     selectedBtn: {
         backgroundColor: "transparent",
-        opacity: 1
     },
     btnSelectedText: {
-        color: Colors.shared.icon
+        color: Colors.shared.primary,
+        fontWeight: "700",
     }
 })

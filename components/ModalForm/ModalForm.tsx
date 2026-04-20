@@ -191,7 +191,7 @@ const ModalForm: FC<Props> = ({ navigation }) => {
             <View style={styles.titleContainer}>
                 <Input
                     placeholder='Title'
-                    style={[styles.input, { fontSize: 24 }]}
+                    style={[styles.input, { fontSize: 22 }]}
                     inputContainerStyle={styles.inputContainer}
                     keyboardType='ascii-capable'
                     maxLength={30}
@@ -210,40 +210,32 @@ export default ModalForm
 
 const styles = StyleSheet.create({
     container: {
-        paddingBottom: 15,
+        paddingBottom: 20,
+        paddingTop: 8,
         backgroundColor: "transparent"
     },
     topRow: {
-        height: 52,
-        marginBottom: 20,
+        height: 60,
+        marginBottom: 22,
         flexDirection: "row",
-        marginHorizontal: 10,
-        backgroundColor: "transparent"
-    },
-    percentWrapper: {
-        flex: 1,
+        marginHorizontal: 14,
         backgroundColor: "transparent"
     },
     input: {
-        borderRadius: 15,
-        fontSize: 48,
-        fontWeight: "bold",
+        borderRadius: 16,
+        fontSize: 44,
+        fontWeight: "700",
         fontFamily: "Futura",
         textAlign: "center",
-        height: 52,
-    },
-    percentIconContainer: {
-        height: 52,
-        marginLeft: 10,
-        backgroundColor: "transparent"
+        height: 56,
     },
     inputContainer: {
         borderBottomWidth: 0,
     },
     titleContainer: {
-        marginHorizontal: 10,
-        height: 52,
-        marginBottom: 25,
+        marginHorizontal: 14,
+        height: 56,
+        marginBottom: 26,
         backgroundColor: "transparent"
     }
 

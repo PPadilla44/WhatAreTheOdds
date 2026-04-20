@@ -3,6 +3,7 @@ import { Button } from "react-native-elements";
 import { View } from "../../components/Themed";
 import React from 'react';
 import { useClicker } from '../contexts/useClicker';
+import Colors from '../../constants/Colors';
 
 const ResetButton = () => {
 
@@ -27,13 +28,20 @@ const ResetButton = () => {
         ));
 
     return (
-        <View testID='resetWrapper' style={[styles.btn, { opacity: didHit ? 1 : 0.5 }]}>
+        <View testID='resetWrapper' style={[styles.btn, { opacity: didHit ? 1 : 0.45 }]}>
             <Button
                 testID='resetBtn'
                 title='Reset'
                 onPress={createTwoButtonAlert}
-                titleStyle={{ color: didHit ? "red" : "gray", fontFamily: "Futura" }}
-                buttonStyle={{ backgroundColor: undefined }}
+                titleStyle={{
+                    color: didHit ? Colors.light.danger : Colors.light.mutedText,
+                    fontFamily: "Futura",
+                    fontWeight: "700",
+                    letterSpacing: 1,
+                    fontSize: 14,
+                    textTransform: "uppercase",
+                }}
+                buttonStyle={{ backgroundColor: undefined, paddingVertical: 10, paddingHorizontal: 18 }}
                 disabled={state.loading}
                 disabledStyle={{ backgroundColor: "transparent" }}
                 disabledTitleStyle={{ opacity: .3 }}
@@ -49,7 +57,7 @@ export default ResetButton
 const styles = StyleSheet.create({
     btn: {
         position: "absolute",
-        left: 10,
-        bottom: 10,
+        left: 14,
+        bottom: 14,
     }
 })

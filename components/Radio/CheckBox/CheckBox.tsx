@@ -1,6 +1,6 @@
-import { StyleSheet, Text, View } from 'react-native'
 import React, { FC } from 'react'
 import { CheckBox as DCheck } from "../../Themed"
+import Colors from '../../../constants/Colors'
 
 interface Props {
     title: string;
@@ -15,9 +15,11 @@ const CheckBox: FC<Props> = ({ title, checked, setChecked }) => {
             title={title}
             checkedIcon='dot-circle-o'
             uncheckedIcon='circle-o'
+            checkedColor={Colors.shared.primary}
             checked={checked}
             onPress={setChecked}
-            containerStyle={{ backgroundColor: "" ,borderColor: "transparent" }}
+            containerStyle={{ backgroundColor: "transparent", borderColor: "transparent", paddingVertical: 14, paddingHorizontal: 16, marginLeft: 0, marginRight: 0 }}
+            textStyle={{ fontSize: 16, fontWeight: checked ? "700" : "500", fontFamily: "Futura" }}
             wrapperStyle={{ justifyContent: "space-between" }}
         />
     )

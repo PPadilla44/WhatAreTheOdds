@@ -1,8 +1,9 @@
-import { Alert, StyleSheet } from 'react-native'
+import { StyleSheet } from 'react-native'
 import React, { FC, useEffect } from 'react'
 import { ButtonGroup } from '../Themed'
 import { useClicker } from '../contexts/useClicker';
-import { ClickerState } from '../../store/clicker';
+import { Alert } from 'react-native';
+import Colors from '../../constants/Colors';
 
 interface Props {
     buttons: any[];
@@ -22,10 +23,10 @@ const TwoButtonGroup: FC<Props> = ({ buttons, clearForm }) => {
 
 
     useEffect(() => {
-        if(state.fractionPref && state.fraction.denominator.toString().length > 4) {
+        if (state.fractionPref && state.fraction.denominator.toString().length > 4) {
             dispatch!({ type: "SET_FRACTIONPREF", payload: 0 })
         }
-        
+
     }, [])
 
     const switchAndReset = (index: number) => {
@@ -49,7 +50,7 @@ const TwoButtonGroup: FC<Props> = ({ buttons, clearForm }) => {
                 "Would you like to continue?",
                 [
                     { text: "No", style: "cancel" },
-                    { text: "Yes", onPress: () => switchAndReset(index)}
+                    { text: "Yes", onPress: () => switchAndReset(index) }
                 ]
             )
             return;
@@ -89,27 +90,31 @@ export default TwoButtonGroup
 
 const styles = StyleSheet.create({
     container: {
-        padding: 2,
-        height: 32,
-        borderRadius: 9,
-        marginBottom: 20,
-        marginTop: 0
+        padding: 4,
+        height: 40,
+        borderRadius: 14,
+        marginBottom: 24,
+        marginTop: 0,
+        marginHorizontal: 14,
+        borderWidth: 0,
     },
     button: {
-        borderRadius: 7,
-        opacity: .5
+        borderRadius: 10,
+        backgroundColor: "transparent",
     },
     text: {
         fontFamily: "Futura",
-        fontSize: 15,
-        fontWeight: "bold",
-        color: "black"
+        fontSize: 14,
+        fontWeight: "600",
+        letterSpacing: 0.5,
+        color: Colors.light.mutedText,
     },
     selectedButton: {
-        backgroundColor: "white",
-        opacity: 1
+        backgroundColor: Colors.shared.primary,
+        borderRadius: 10,
     },
     selectedText: {
-        color: "black"
+        color: "white",
+        fontWeight: "700",
     }
 })

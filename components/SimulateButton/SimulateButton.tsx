@@ -1,7 +1,6 @@
-import { Pressable, StyleSheet } from 'react-native'
+import { StyleSheet } from 'react-native'
 import React, { useEffect, useState } from 'react'
 import Colors from '../../constants/Colors'
-import { Text } from '../Themed'
 import { useClicker } from '../contexts/useClicker'
 import { Button } from 'react-native-elements'
 
@@ -37,33 +36,18 @@ const SimulateButton = () => {
         }
     }, [didHit])
 
-
-
     return (
         <Button
-        testID='simBtn'
-        title={ loading ? "Cancel" : "Simulate" }
-        onPress={simulate}
-        activeOpacity={.6}
-        titleStyle={[{ color: loading ? "red" : Colors.dark.input }, styles.simText]}
-        buttonStyle={{ backgroundColor: undefined }}
-        disabled={didHit}
-        disabledStyle={{backgroundColor:"transparent"}}
-        disabledTitleStyle={{ opacity: .3 }}
-    />
-        // <Pressable onPress={simulate}
-        //     style={({ pressed }) => ({
-        //         opacity: pressed ? 0.3 : 1
-        //     })}
-        //     disabled={didHit}
-        // >
-        //     {
-        //         loading ?
-        //             <Text style={[styles.simText, { color: "red" }]} >Cancel</Text>
-        //             :
-        //             <Text style={styles.simText} >Simulate</Text>
-        //     }
-        // </Pressable>
+            testID='simBtn'
+            title={loading ? "Cancel" : "Simulate"}
+            onPress={simulate}
+            activeOpacity={.6}
+            titleStyle={[{ color: loading ? Colors.light.danger : Colors.shared.primary }, styles.simText]}
+            buttonStyle={{ backgroundColor: undefined, paddingVertical: 8, paddingHorizontal: 14 }}
+            disabled={didHit}
+            disabledStyle={{ backgroundColor: "transparent" }}
+            disabledTitleStyle={{ opacity: .3 }}
+        />
     )
 }
 
@@ -71,8 +55,10 @@ export default SimulateButton
 
 const styles = StyleSheet.create({
     simText: {
-        fontSize: 18,
-        fontWeight: "bold",
-        fontFamily: "Futura"
+        fontSize: 15,
+        fontWeight: "700",
+        fontFamily: "Futura",
+        letterSpacing: 1,
+        textTransform: "uppercase",
     }
 })

@@ -23,31 +23,31 @@ const MultiplierModal: FC<Props> = ({ modalVisible, setModalVisible, mult, handl
                 setModalVisible(!modalVisible);
             }}>
 
-            <View darkColor={Colors.light.input} style={styles.centeredView}>
-                <View darkColor={Colors.light.input} style={styles.modalView}>
-                    <Text style={{ color: "black", textAlign: "center", fontSize: 20, fontWeight: "bold" }}>Select A Multiplier</Text>
-                    <Text style={{ color: "black", textAlign: "center", fontSize: 15}}>Applies To Denominator</Text>
+            <View darkColor="rgba(0,0,0,0.55)" lightColor="rgba(15,23,42,0.35)" style={styles.centeredView}>
+                <View darkColor={Colors.dark.surface} lightColor={Colors.light.surface} style={styles.modalView}>
+                    <Text style={styles.title}>Select a multiplier</Text>
+                    <Text style={styles.subtitle}>Applies to denominator</Text>
                     <Picker
                         selectedValue={mult}
-                        onValueChange={(multiplier, index) => handleChanges({multiplier})}
+                        onValueChange={(multiplier, _index) => handleChanges({ multiplier })}
                         style={{
                             width: 300,
                             justifyContent: "center"
                         }}
                         itemStyle={{
                             fontFamily: "Futura",
-                            fontWeight: "bold"
+                            fontWeight: "600"
                         }}
                     >
-                        <Picker.Item label="x 1" value="1" />
-                        <Picker.Item label="x 10" value="10" />
-                        <Picker.Item label="x M" value="M" />
-                        <Picker.Item label="x B" value="B" />
+                        <Picker.Item label="× 1" value="1" />
+                        <Picker.Item label="× 10" value="10" />
+                        <Picker.Item label="× M (million)" value="M" />
+                        <Picker.Item label="× B (billion)" value="B" />
                     </Picker>
                     <Pressable
-                        style={[styles.button, styles.buttonClose]}
+                        style={({ pressed }) => [styles.button, { opacity: pressed ? 0.85 : 1 }]}
                         onPress={() => setModalVisible(!modalVisible)}>
-                        <Text style={styles.textStyle}>Confirm Multiplier</Text>
+                        <Text style={styles.textStyle}>Confirm</Text>
                     </Pressable>
                 </View>
             </View>
@@ -65,34 +65,45 @@ const styles = StyleSheet.create({
         flex: 1,
         justifyContent: 'center',
         alignItems: 'center',
-        backgroundColor: "transparent"
     },
     modalView: {
-        // backgroundColor: 'white',
-        borderRadius: 20,
-        padding: 20,
+        borderRadius: 24,
+        padding: 24,
         shadowColor: '#000',
         shadowOffset: {
             width: 0,
-            height: 2,
+            height: 12,
         },
         shadowOpacity: 0.25,
-        shadowRadius: 4,
-        elevation: 5,
+        shadowRadius: 24,
+        elevation: 8,
+        minWidth: 320,
+    },
+    title: {
+        textAlign: 'center',
+        fontSize: 20,
+        fontWeight: '700',
+        letterSpacing: -0.3,
+        marginBottom: 2,
+    },
+    subtitle: {
+        textAlign: 'center',
+        fontSize: 13,
+        opacity: 0.6,
+        marginBottom: 8,
     },
     button: {
-        borderRadius: 10,
-        padding: 10,
-        elevation: 2,
-    },
-
-    buttonClose: {
-        backgroundColor: Colors.shared.text,
+        borderRadius: 14,
+        paddingVertical: 14,
+        paddingHorizontal: 18,
+        backgroundColor: Colors.shared.primary,
+        marginTop: 6,
     },
     textStyle: {
         color: 'white',
-        fontWeight: 'bold',
+        fontWeight: '700',
         textAlign: 'center',
+        letterSpacing: 0.5,
+        fontSize: 15,
     },
-
 });

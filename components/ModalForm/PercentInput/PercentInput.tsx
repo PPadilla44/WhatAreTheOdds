@@ -2,6 +2,7 @@ import { StyleSheet } from 'react-native'
 import React, { FC } from 'react'
 import { Input, View } from '../../Themed'
 import { TextAsIcon } from '../../UI'
+import Colors from '../../../constants/Colors'
 
 
 export interface Props {
@@ -25,7 +26,7 @@ const PercentInput: FC<Props> = ({ changeText, oddsString }) => {
                 />
             </View>
             <View style={styles.percentIconContainer}>
-                <TextAsIcon style={{fontSize: 48, fontWeight: "bold"}} text={'%'} />
+                <TextAsIcon style={{ fontSize: 44, fontWeight: "700", color: Colors.shared.primary }} text={'%'} />
             </View>
         </>
     )
@@ -39,17 +40,19 @@ const styles = StyleSheet.create({
         backgroundColor: "transparent"
     },
     input: {
-        borderRadius: 15,
-        fontSize: 48,
-        fontWeight: "bold",
+        borderRadius: 16,
+        fontSize: 44,
+        fontWeight: "700",
         fontFamily: "Futura",
         textAlign: "center",
-        height: 52,
+        height: 60,
+        letterSpacing: -0.5,
     },
     percentIconContainer: {
-        height: 52,
+        height: 60,
         marginLeft: 10,
-        backgroundColor: "transparent"
+        backgroundColor: "transparent",
+        justifyContent: "center",
     },
     inputContainer: {
         borderBottomWidth: 0,

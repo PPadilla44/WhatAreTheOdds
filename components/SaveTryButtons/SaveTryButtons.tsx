@@ -18,26 +18,26 @@ const SaveTryButtons: FC<Props> = ({ showTry, handleSave, handleTry }) => {
 
             <TouchableOpacity testID='saveBtn'
                 disabled={!showTry}
-                lightColor={showTry ? "" : Colors.dark.input}
-                darkColor={showTry ? "" : Colors.dark.input}
-                containerStyle={[styles.saveBtn, { opacity: showTry ? 1 : .5 } ]}
+                lightColor={showTry ? Colors.shared.primaryDeep : Colors.light.input}
+                darkColor={showTry ? Colors.shared.primaryDeep : Colors.dark.input}
+                containerStyle={[styles.saveBtn, { opacity: showTry ? 1 : .5 }]}
                 onPress={handleSave}>
                 <Text style={styles.saveText}>Save</Text>
             </TouchableOpacity>
 
             <TouchableOpacity
                 testID='tryBtn'
-                lightColor={showTry ? Colors.light.input : "transparent"}
-                darkColor={showTry ? Colors.dark.input : "transparent"}
+                lightColor={showTry ? Colors.shared.primary : Colors.light.input}
+                darkColor={showTry ? Colors.shared.primary : Colors.dark.input}
                 containerStyle={styles.tryBtn}
                 onPress={handleTry}
                 disabled={!showTry}
             >
                 <Text
-                    lightColor={showTry ? "" : Colors.dark.input}
-                    darkColor={showTry ? "" : Colors.dark.text}
-                    style={[styles.tryText, { opacity: showTry ? 1 : .5 }]} >
-                    Try
+                    lightColor={showTry ? "white" : Colors.light.mutedText}
+                    darkColor={showTry ? "white" : Colors.dark.mutedText}
+                    style={[styles.tryText, { opacity: showTry ? 1 : .6 }]} >
+                    Try it
                 </Text>
             </TouchableOpacity>
 
@@ -52,24 +52,38 @@ const styles = StyleSheet.create({
         flexDirection: "row",
         height: 60,
         backgroundColor: "transparent",
+        marginHorizontal: 10,
+        gap: 12,
     },
     tryBtn: {
         flex: 2,
         alignItems: "center",
         justifyContent: "center",
+        borderRadius: 16,
+        overflow: "hidden",
+        shadowColor: Colors.shared.primary,
+        shadowOffset: { width: 0, height: 8 },
+        shadowOpacity: 0.25,
+        shadowRadius: 14,
+        elevation: 6,
     },
     tryText: {
-        fontSize: 36,
-        fontWeight: "bold"
+        fontSize: 22,
+        fontWeight: "700",
+        color: "white",
+        letterSpacing: 0.4,
     },
     saveBtn: {
         flex: 1,
         alignItems: "center",
         justifyContent: "center",
+        borderRadius: 16,
+        overflow: "hidden",
     },
     saveText: {
         color: "white",
-        fontSize: 36,
-        fontWeight: "bold"
+        fontSize: 22,
+        fontWeight: "700",
+        letterSpacing: 0.4,
     }
 })

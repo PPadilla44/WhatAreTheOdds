@@ -1,6 +1,6 @@
 import { StyleSheet } from 'react-native'
 import { View } from '../../components/Themed';
-import React, { FC, useState } from 'react'
+import React from 'react'
 import CheckBox from './CheckBox'
 import Colors from '../../constants/Colors';
 import { useSettings } from '../contexts/useSettings';
@@ -12,9 +12,9 @@ const Radio = () => {
     const options = ["automatic", "dark", "light"];
     const { state, dispatch } = useSettings();
     const { data } = state;
-    
-    const handleChange = (index: number, option: string) => {
-        if(option === "automatic") {
+
+    const handleChange = (_index: number, option: string) => {
+        if (option === "automatic") {
             setAppearance(state, dispatch, { fromDevice: true })
         } else {
             setAppearance(state, dispatch, { fromDevice: false, appearance: option })
@@ -22,7 +22,7 @@ const Radio = () => {
     }
 
     return (
-        <View darkColor="#252525" lightColor={Colors.light.input} style={styles.container}>
+        <View darkColor={Colors.dark.surface} lightColor={Colors.light.surface} style={styles.container}>
 
             {
                 options.map((o, i) =>
@@ -44,6 +44,13 @@ export default Radio
 
 const styles = StyleSheet.create({
     container: {
-        borderRadius: 15
+        borderRadius: 18,
+        paddingHorizontal: 4,
+        paddingVertical: 4,
+        shadowColor: "#000",
+        shadowOffset: { width: 0, height: 6 },
+        shadowOpacity: 0.06,
+        shadowRadius: 14,
+        elevation: 2,
     }
 })

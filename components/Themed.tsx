@@ -82,7 +82,7 @@ export const Input = (props: InputProps) => {
                 keyboardAppearance={theme}
                 {...otherProps}
             />
-            <View style={{ backgroundColor, width: "100%", height: "100%", opacity: .5, position: "absolute", borderRadius: 15, zIndex: -10 }} />
+            <View style={{ backgroundColor, width: "100%", height: "100%", opacity: .9, position: "absolute", borderRadius: 16, zIndex: -10 }} />
         </>
     )
 }

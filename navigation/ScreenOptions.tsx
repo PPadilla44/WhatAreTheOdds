@@ -13,7 +13,7 @@ export const MainScreenOptions = (colorScheme: "light" | "dark", navigation: Nat
         headerStyle: { backgroundColor: Colors[colorScheme].background },
         headerShadowVisible: false,
         headerRight: () =>
-            <View style={{ flexDirection: "row", width: 75, justifyContent: "space-between" }}>
+            <View style={{ flexDirection: "row", width: 80, justifyContent: "space-between", paddingRight: 6 }}>
                 <PressableIcon callBack={() => navigation.navigate('Settings')} name='gear' type='evilicon' size={32} />
                 <PressableIcon callBack={() => navigation.navigate('Modal')} name='plus' type='evilicon' size={32} />
             </View>,
@@ -23,14 +23,25 @@ export const MainScreenOptions = (colorScheme: "light" | "dark", navigation: Nat
 
 export const ModalScreenOptions = (colorScheme: "light" | "dark", navigation: NativeStackNavigationProp<RootStackParamList>)
     : NativeStackNavigationOptions => ({
-        headerTitle: "",
+        headerTitle: "New Odds",
+        headerTitleStyle: { fontFamily: "Futura", fontSize: 17, fontWeight: "700", color: colorScheme === "dark" ? Colors.dark.text : Colors.light.text },
         headerStyle: { backgroundColor: Colors[colorScheme].modal },
         headerShadowVisible: false,
-        headerLeft: () => <Button title="Cancel" titleStyle={{ color: Colors.shared.icon }} buttonStyle={{ padding: 0, backgroundColor: "" }} onPress={() => navigation.goBack()} />
+        headerLeft: () => (
+            <Button
+                title="Cancel"
+                titleStyle={{ color: Colors.shared.primary, fontFamily: "Futura", fontSize: 15, fontWeight: "600" }}
+                buttonStyle={{ padding: 0, backgroundColor: "transparent" }}
+                onPress={() => navigation.goBack()}
+            />
+        )
     })
 
 export const SettingsScreenOptions = (colorScheme: "light" | "dark", navigation: NativeStackNavigationProp<RootStackParamList>)
-: NativeStackNavigationOptions => ({
-    headerTitle: "Settings",
-    headerLeft: () => <PressableIcon callBack={() => navigation.goBack()} name="arrowleft" size={32} type="antdesign" />
-})
+    : NativeStackNavigationOptions => ({
+        headerTitle: "Settings",
+        headerTitleStyle: { fontFamily: "Futura", fontSize: 17, fontWeight: "700", color: colorScheme === "dark" ? Colors.dark.text : Colors.light.text },
+        headerStyle: { backgroundColor: Colors[colorScheme].background },
+        headerShadowVisible: false,
+        headerLeft: () => <PressableIcon callBack={() => navigation.goBack()} name="arrowleft" size={28} type="antdesign" />
+    })
