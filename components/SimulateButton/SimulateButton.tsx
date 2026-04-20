@@ -2,13 +2,13 @@ import { StyleSheet } from 'react-native'
 import React, { useEffect, useState } from 'react'
 import Colors from '../../constants/Colors'
 import { useClicker } from '../contexts/useClicker'
-import { Button } from 'react-native-elements'
+import { Button } from '@rneui/themed'
 
 const SimulateButton = () => {
 
     const { state, dispatch } = useClicker();
     const { didHit, loading } = state;
-    const [intervalId, setIntervalId] = useState<NodeJS.Timer | null>(null);
+    const [intervalId, setIntervalId] = useState<ReturnType<typeof setInterval> | null>(null);
 
     const simulate = () => {
         if (intervalId) {
@@ -31,7 +31,7 @@ const SimulateButton = () => {
     useEffect(() => {
         if (didHit) {
             dispatch!({ type: "SET_LOADING", payload: false });
-            clearInterval(intervalId as NodeJS.Timer);
+            clearInterval(intervalId as ReturnType<typeof setInterval>);
             setIntervalId(null);
         }
     }, [didHit])

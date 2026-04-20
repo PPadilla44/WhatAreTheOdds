@@ -61,7 +61,7 @@ function RootNavigator() {
 
     return (
         <Stack.Navigator>
-            <Stack.Screen name="Root" component={Main} options={({ navigation }: RootTabScreenProps<'Main'>) => MainScreenOptions(theme, navigation)} />
+            <Stack.Screen name="Root" component={Main} options={({ navigation }: RootTabScreenProps<'Root'>) => MainScreenOptions(theme, navigation)} />
             <Stack.Screen name="Settings" component={Settings} options={({ navigation }: RootTabScreenProps<'Settings'>) => SettingsScreenOptions(theme, navigation)} />
             <Stack.Screen name="NotFound" component={NotFoundScreen} options={{ title: 'Oops!' }} />
             <Stack.Group screenOptions={{ presentation: 'modal' }}>

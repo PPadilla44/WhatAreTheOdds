@@ -8,7 +8,7 @@ import {
     ButtonGroupProps as DButtonGroupProps,
     CheckBox as DCheckBox,
     CheckBoxProps as DCheckBoxProps,
-} from 'react-native-elements';
+} from '@rneui/themed';
 import { ScrollView as DefaultScrollView, NativeViewGestureHandlerProps, TouchableOpacity as DefaultTouchableOpacity } from "react-native-gesture-handler";
 
 import Colors from '../constants/Colors';
@@ -66,7 +66,7 @@ export const TouchableOpacity = (props: TouchableOpacityProps) => {
 export const Icon = (props: IconProps) => {
     const { style, lightColor, darkColor, ...otherProps } = props;
     const color = useThemeColor({ light: lightColor, dark: darkColor }, "icon").colorFromProps;
-    return <DefaultIcon tvParallaxProperties={undefined} color={color} {...otherProps} />
+    return <DefaultIcon color={color} {...otherProps} />
 }
 
 export const Input = (props: InputProps) => {

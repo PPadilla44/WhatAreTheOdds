@@ -56,14 +56,14 @@ export const initialClickerState: ClickerState = {
 // ACTIONS
 export declare type ClickerActionKind = 
 'INCREASE'
-|| 'RESET' 
-|| 'UPDATE_PERCENT' 
-|| 'UPDATE_FRACTION' 
-|| "SET_LOADING" 
-|| "SET_FRACTIONPREF"
-|| "SET_MULT"
-|| "SET_STATE"
-|| "SET_DISPLAY"
+| 'RESET' 
+| 'UPDATE_PERCENT' 
+| 'UPDATE_FRACTION' 
+| "SET_LOADING" 
+| "SET_FRACTIONPREF"
+| "SET_MULT"
+| "SET_STATE"
+| "SET_DISPLAY"
 ;
 
 // REDUCER

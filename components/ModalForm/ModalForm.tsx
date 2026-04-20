@@ -21,7 +21,7 @@ export function generateUUID(digits = 15) {
 }
 
 interface Props {
-    navigation: NativeStackNavigationProp<RootStackParamList>
+    navigation: NativeStackNavigationProp<RootStackParamList, any>
 }
 
 const ModalForm: FC<Props> = ({ navigation }) => {

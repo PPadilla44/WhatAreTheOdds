@@ -5,9 +5,9 @@ import Colors from "../constants/Colors";
 import { RootStackParamList } from "../types";
 import SimulateButton from "../components/SimulateButton";
 import { View } from "react-native";
-import { Button } from "react-native-elements";
+import { Button } from "@rneui/themed";
 
-export const MainScreenOptions = (colorScheme: "light" | "dark", navigation: NativeStackNavigationProp<RootStackParamList>)
+export const MainScreenOptions = (colorScheme: "light" | "dark", navigation: NativeStackNavigationProp<RootStackParamList, any>)
     : NativeStackNavigationOptions => ({
         headerTitle: "",
         headerStyle: { backgroundColor: Colors[colorScheme].background },
@@ -21,7 +21,7 @@ export const MainScreenOptions = (colorScheme: "light" | "dark", navigation: Nat
 
     })
 
-export const ModalScreenOptions = (colorScheme: "light" | "dark", navigation: NativeStackNavigationProp<RootStackParamList>)
+export const ModalScreenOptions = (colorScheme: "light" | "dark", navigation: NativeStackNavigationProp<RootStackParamList, any>)
     : NativeStackNavigationOptions => ({
         headerTitle: "New Odds",
         headerTitleStyle: { fontFamily: "Futura", fontSize: 17, fontWeight: "700", color: colorScheme === "dark" ? Colors.dark.text : Colors.light.text },
@@ -37,7 +37,7 @@ export const ModalScreenOptions = (colorScheme: "light" | "dark", navigation: Na
         )
     })
 
-export const SettingsScreenOptions = (colorScheme: "light" | "dark", navigation: NativeStackNavigationProp<RootStackParamList>)
+export const SettingsScreenOptions = (colorScheme: "light" | "dark", navigation: NativeStackNavigationProp<RootStackParamList, any>)
     : NativeStackNavigationOptions => ({
         headerTitle: "Settings",
         headerTitleStyle: { fontFamily: "Futura", fontSize: 17, fontWeight: "700", color: colorScheme === "dark" ? Colors.dark.text : Colors.light.text },

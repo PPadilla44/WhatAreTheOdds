@@ -38,4 +38,4 @@ export type RootTabParamList = {
     Settings: undefined;
 };
 
-export type RootTabScreenProps<Screen extends keyof RootTabParamList> = NativeStackScreenProps<RootStackParamList>;
+export type RootTabScreenProps<Screen extends keyof RootStackParamList> = NativeStackScreenProps<RootStackParamList, Screen>;

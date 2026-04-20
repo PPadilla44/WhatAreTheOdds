@@ -1,5 +1,5 @@
 import { Alert, StyleSheet } from 'react-native';
-import { Button } from "react-native-elements";
+import { Button } from "@rneui/themed";
 import { View } from "../../components/Themed";
 import React from 'react';
 import { useClicker } from '../contexts/useClicker';

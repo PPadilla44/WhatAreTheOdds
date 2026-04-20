@@ -9,7 +9,7 @@ import { RootTabScreenProps } from '../types';
 import Colors from '../constants/Colors';
 
 
-const Main: FC<RootTabScreenProps<"Main">> = ({ }) => {
+const Main: FC<RootTabScreenProps<"Root">> = ({ }) => {
 
     const { state, dispatch } = useClicker();
     const { count, oddsString, title, fraction, multiplier, fractionPref } = state;
