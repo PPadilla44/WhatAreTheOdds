@@ -1,0 +1,25 @@
+{
+  "cli": {
+    "version": ">= 0.48.2",
+    "appVersionSource": "remote"
+  },
+  "build": {
+    "development": {
+      "developmentClient": true,
+      "distribution": "internal"
+    },
+    "preview": {
+      "distribution": "internal"
+    },
+    "production": {}
+  },
+  "submit": {
+    "production": {
+      "ios": {
+        "appleId": "whosfamish@gmail.com",
+        "ascAppId": "1615466936",
+        "appleTeamId": "248R538U2X"
+      }
+    }
+  }
+}
