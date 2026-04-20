@@ -2,14 +2,13 @@ import { NativeStackNavigationOptions, NativeStackNavigationProp } from "@react-
 import React from "react";
 import { View } from "react-native";
 import PressableIcon from "../components/PressableIcon";
-import SimulateButton from "../components/SimulateButton";
 import StatsChip from "../components/StatsChip";
 import KofiChip from "../components/KofiChip";
 import Colors from "../constants/Colors";
 import Fonts from "../constants/Fonts";
 import { RootStackParamList } from "../types";
 
-export const MainScreenOptions = (colorScheme: "light" | "dark", navigation: NativeStackNavigationProp<RootStackParamList, any>)
+export const MainScreenOptions = (colorScheme: "light" | "dark", _navigation: NativeStackNavigationProp<RootStackParamList, any>)
     : NativeStackNavigationOptions => ({
         headerTitle: () => (
             <View style={{ flexDirection: "row", alignItems: "center", gap: 8 }}>
@@ -20,12 +19,8 @@ export const MainScreenOptions = (colorScheme: "light" | "dark", navigation: Nat
         headerTitleAlign: "center",
         headerStyle: { backgroundColor: Colors[colorScheme].background },
         headerShadowVisible: false,
-        headerRight: () =>
-            <View style={{ flexDirection: "row", alignItems: "center", gap: 8, paddingRight: 8 }}>
-                <PressableIcon callBack={() => navigation.navigate('Settings')} name='settings' size={16} />
-                <PressableIcon callBack={() => navigation.navigate('Modal')} name='plus' size={18} />
-            </View>,
-        headerLeft: () => <View style={{ paddingLeft: 6 }}><SimulateButton /></View>
+        headerLeft: () => null,
+        headerRight: () => null,
     })
 
 export const ModalScreenOptions = (colorScheme: "light" | "dark", navigation: NativeStackNavigationProp<RootStackParamList, any>)

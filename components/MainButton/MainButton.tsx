@@ -112,6 +112,9 @@ const MainButton = () => {
 
     if (didHit) {
         const resultColor = BtnColorObj[results.BtnColor];
+        const resultLabel = results.BtnColor === 'lucky' ? 'LUCKY'
+            : results.BtnColor === 'unlucky' ? 'UNLUCKY'
+                : 'NORMAL';
         return (
             <View style={styles.stage}>
                 <View style={[styles.halo, { shadowColor: resultColor, backgroundColor: resultColor }]} />
@@ -125,7 +128,8 @@ const MainButton = () => {
                         pointerEvents="none"
                     />
                     <View style={styles.textWrap} pointerEvents="none">
-                        <Text style={styles.btnText}>{results.text}</Text>
+                        <Text style={styles.resultEyebrow}>YOU ARE</Text>
+                        <Text style={styles.resultLabel}>{resultLabel}</Text>
                     </View>
                 </View>
             </View>
@@ -230,5 +234,24 @@ const styles = StyleSheet.create({
     textWrap: {
         zIndex: 10,
         elevation: 10,
+        alignItems: 'center',
+        justifyContent: 'center',
+    },
+    resultEyebrow: {
+        fontSize: 13,
+        color: 'rgba(255,255,255,0.85)',
+        fontFamily: Fonts.bodyBold,
+        letterSpacing: 4,
+        textTransform: 'uppercase',
+        marginBottom: 4,
+    },
+    resultLabel: {
+        fontSize: 44,
+        color: '#FFFFFF',
+        fontFamily: Fonts.displayExtraBold,
+        letterSpacing: -1,
+        textShadowColor: 'rgba(0,0,0,0.25)',
+        textShadowOffset: { width: 0, height: 2 },
+        textShadowRadius: 8,
     }
 })

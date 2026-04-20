@@ -5,6 +5,7 @@ import SubContainer from '../components/SubContainer';
 import ResetButton from '../components/ResetButton';
 import MainButton from '../components/MainButton';
 import BackgroundAmbient from '../components/BackgroundAmbient';
+import BottomActionBar from '../components/BottomActionBar';
 import SegmentedPill from '../components/SegmentedPill';
 import { useClicker } from '../components/contexts/useClicker';
 import { useSettings } from '../components/contexts/useSettings';
@@ -79,6 +80,7 @@ const Main: FC<RootTabScreenProps<"Root">> = ({ }) => {
             </View>
 
             <ResetButton />
+            <BottomActionBar />
 
         </View>
     )
@@ -92,7 +94,7 @@ const styles = StyleSheet.create({
         alignItems: "center",
         justifyContent: "space-between",
         paddingTop: 12,
-        paddingBottom: 80,
+        paddingBottom: 96,
         paddingHorizontal: 20,
     },
     topSection: {
