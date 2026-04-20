@@ -13,6 +13,8 @@ import { ScrollView as DefaultScrollView, NativeViewGestureHandlerProps, Touchab
 
 import Colors from '../constants/Colors';
 
+import Fonts from '../constants/Fonts';
+
 import { useSettings } from './contexts/useSettings';
 
 export const useThemeColor = (
@@ -46,7 +48,7 @@ export const Text = (props: TextProps) => {
     const { style, lightColor, darkColor, ...otherProps } = props;
     const color = useThemeColor({ light: lightColor, dark: darkColor }, "text").colorFromProps;
 
-    return <DefaultText style={[{ color, fontFamily: "Futura" }, style]} {...otherProps} />
+    return <DefaultText style={[{ color, fontFamily: Fonts.bodyRegular }, style]} {...otherProps} />
 }
 
 export const View = (props: ViewProps) => {

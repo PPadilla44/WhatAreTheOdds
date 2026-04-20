@@ -3,6 +3,7 @@ import React, { FC, useState } from 'react';
 import { TextAsIcon } from '../../UI';
 import { TouchableOpacity, View, Text, Input } from '../../Themed';
 import Colors from '../../../constants/Colors';
+import Fonts from '../../../constants/Fonts';
 import MultiplierModal from './MultiplierModal';
 
 
@@ -76,7 +77,7 @@ const styles = StyleSheet.create({
         borderRadius: 16,
         fontSize: 44,
         fontWeight: "700",
-        fontFamily: "Futura",
+        fontFamily: Fonts.bodyBold,
         textAlign: "center",
         height: 60,
         overflow: "visible",

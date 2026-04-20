@@ -5,6 +5,8 @@ import { useClicker } from '../contexts/useClicker';
 import { Alert } from 'react-native';
 import Colors from '../../constants/Colors';
 
+import Fonts from '../../constants/Fonts';
+
 interface Props {
     buttons: any[];
     clearForm: () => {
@@ -103,7 +105,7 @@ const styles = StyleSheet.create({
         backgroundColor: "transparent",
     },
     text: {
-        fontFamily: "Futura",
+        fontFamily: Fonts.bodyBold,
         fontSize: 14,
         fontWeight: "600",
         letterSpacing: 0.5,

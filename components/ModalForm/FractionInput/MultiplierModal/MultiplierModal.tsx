@@ -4,6 +4,8 @@ import { Picker } from '@react-native-picker/picker';
 import { Text, View } from "../../../Themed"
 import Colors from '../../../../constants/Colors';
 
+import Fonts from '../../../../constants/Fonts';
+
 interface Props {
     modalVisible: boolean;
     setModalVisible: React.Dispatch<React.SetStateAction<boolean>>;
@@ -35,7 +37,7 @@ const MultiplierModal: FC<Props> = ({ modalVisible, setModalVisible, mult, handl
                             justifyContent: "center"
                         }}
                         itemStyle={{
-                            fontFamily: "Futura",
+                            fontFamily: Fonts.bodyBold,
                             fontWeight: "600"
                         }}
                     >

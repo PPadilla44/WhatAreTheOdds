@@ -4,30 +4,40 @@ import React, { FC } from 'react';
 import SubContainer from '../components/SubContainer';
 import ResetButton from '../components/ResetButton';
 import MainButton from '../components/MainButton';
+import BackgroundAmbient from '../components/BackgroundAmbient';
 import { useClicker } from '../components/contexts/useClicker';
+import { useSettings } from '../components/contexts/useSettings';
 import { RootTabScreenProps } from '../types';
 import Colors from '../constants/Colors';
+import Fonts from '../constants/Fonts';
 
 
 const Main: FC<RootTabScreenProps<"Root">> = ({ }) => {
 
     const { state, dispatch } = useClicker();
+    const { state: settings } = useSettings();
     const { count, oddsString, title, fraction, multiplier, fractionPref } = state;
     const { numerator, denominator } = fraction;
 
+    const theme = (settings.data.appearance.appearance as 'light' | 'dark') ?? 'dark';
+
     return (
         <View testID='Main' style={styles.container}>
+            <BackgroundAmbient theme={theme} />
 
-            <SubContainer
-                text={`${count}`}
-                textStyle={styles.clickAmnt}
-                title={`Times Clicked`}
-            />
+            <View style={styles.topSection} darkColor="transparent" lightColor="transparent">
+                <SubContainer
+                    text={`${count}`}
+                    textStyle={styles.clickAmnt}
+                    title={`Times Clicked`}
+                />
+            </View>
 
-            <MainButton />
+            <View style={styles.centerSection} darkColor="transparent" lightColor="transparent">
+                <MainButton />
+            </View>
 
-            <View style={styles.bottomSection}>
-
+            <View style={styles.bottomSection} darkColor="transparent" lightColor="transparent">
                 <SubContainer
                     text={
                         multiplier === "B" || multiplier === "M" ?
@@ -70,8 +80,20 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         alignItems: "center",
-        justifyContent: "space-around",
+        justifyContent: "space-between",
+        paddingTop: 12,
+        paddingBottom: 80,
         paddingHorizontal: 20,
+    },
+    topSection: {
+        width: "100%",
+        alignItems: "center",
+    },
+    centerSection: {
+        width: "100%",
+        alignItems: "center",
+        justifyContent: "center",
+        flex: 1,
     },
     bottomSection: {
         alignItems: "center",
@@ -79,33 +101,31 @@ const styles = StyleSheet.create({
         width: "100%",
     },
     clickAmnt: {
-        fontWeight: "800",
-        fontSize: 72,
-        fontFamily: "Futura",
-        letterSpacing: -2,
+        fontSize: 80,
+        fontFamily: Fonts.displayExtraBold,
+        letterSpacing: -3,
+        lineHeight: 86,
     },
     probText: {
-        fontWeight: "700",
         fontSize: 44,
         textAlign: "center",
-        fontFamily: "Futura",
-        letterSpacing: -0.5,
+        fontFamily: Fonts.displayBold,
+        letterSpacing: -1,
     },
     btnContainer: {
-        height: 26,
-        marginTop: 10,
+        height: 30,
+        marginTop: 14,
         borderColor: "transparent",
         backgroundColor: "transparent",
-        width: 240,
+        width: 260,
     },
     btn: {
         backgroundColor: "transparent",
     },
     btnText: {
-        fontFamily: "Futura",
-        fontSize: 13,
-        letterSpacing: 1.6,
-        fontWeight: "600",
+        fontFamily: Fonts.bodySemiBold,
+        fontSize: 12,
+        letterSpacing: 2.2,
         color: Colors.light.mutedText,
         textTransform: "uppercase",
     },
@@ -114,6 +134,6 @@ const styles = StyleSheet.create({
     },
     btnSelectedText: {
         color: Colors.shared.primary,
-        fontWeight: "700",
+        fontFamily: Fonts.bodyBold,
     }
 })

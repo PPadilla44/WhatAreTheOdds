@@ -5,6 +5,8 @@ import React from 'react';
 import { useClicker } from '../contexts/useClicker';
 import Colors from '../../constants/Colors';
 
+import Fonts from '../../constants/Fonts';
+
 const ResetButton = () => {
 
     const { state, dispatch } = useClicker();
@@ -35,7 +37,7 @@ const ResetButton = () => {
                 onPress={createTwoButtonAlert}
                 titleStyle={{
                     color: didHit ? Colors.light.danger : Colors.light.mutedText,
-                    fontFamily: "Futura",
+                    fontFamily: Fonts.bodyBold,
                     fontWeight: "700",
                     letterSpacing: 1,
                     fontSize: 14,

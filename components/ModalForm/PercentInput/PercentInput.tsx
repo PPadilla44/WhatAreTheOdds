@@ -5,6 +5,9 @@ import { TextAsIcon } from '../../UI'
 import Colors from '../../../constants/Colors'
 
 
+import Fonts from '../../../constants/Fonts'
+
+
 export interface Props {
     oddsString: string;
     changeText: (data: {}) => void;
@@ -43,7 +46,7 @@ const styles = StyleSheet.create({
         borderRadius: 16,
         fontSize: 44,
         fontWeight: "700",
-        fontFamily: "Futura",
+        fontFamily: Fonts.bodyBold,
         textAlign: "center",
         height: 60,
         letterSpacing: -0.5,

@@ -1,4 +1,5 @@
 import { StyleSheet } from 'react-native';
+import Fonts from '../../constants/Fonts';
 import React, { FC, useState } from 'react';
 import { Input, View } from '../Themed';
 import TwoButtonGroup from '../TwoButtonGroup';
@@ -225,7 +226,7 @@ const styles = StyleSheet.create({
         borderRadius: 16,
         fontSize: 44,
         fontWeight: "700",
-        fontFamily: "Futura",
+        fontFamily: Fonts.bodyBold,
         textAlign: "center",
         height: 56,
     },
