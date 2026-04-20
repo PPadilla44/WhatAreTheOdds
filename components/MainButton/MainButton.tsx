@@ -14,7 +14,6 @@ const MainButton = () => {
     if (didHit) {
         return (
             <View testID='mainBtnResults' style={[styles.btnDone, { backgroundColor: BtnColorObj[results.BtnColor], shadowColor: BtnColorObj[results.BtnColor] }]} >
-                <View style={styles.innerRing} pointerEvents="none" />
                 <Text style={styles.btnText}>{results.text}</Text>
             </View>
         )
@@ -22,7 +21,6 @@ const MainButton = () => {
 
     return (
         <TouchableOpacity testID='mainBtn' containerStyle={[styles.btn, { shadowColor: BtnColorObj.default }]} onPress={handlePress} activeOpacity={0.85}>
-            <View style={styles.innerRing} pointerEvents="none" />
             <Text style={styles.btnText}>What Are The Odds?</Text>
         </TouchableOpacity>
     )
@@ -56,17 +54,6 @@ const styles = StyleSheet.create({
         shadowOpacity: 0.35,
         shadowRadius: 28,
         elevation: 12,
-    },
-    innerRing: {
-        position: "absolute",
-        top: 10,
-        left: 10,
-        right: 10,
-        bottom: 10,
-        borderRadius: (SIZE - 20) / 2,
-        borderWidth: 1,
-        borderColor: "rgba(255,255,255,0.2)",
-        backgroundColor: "transparent",
     },
     btnText: {
         fontSize: 30,
