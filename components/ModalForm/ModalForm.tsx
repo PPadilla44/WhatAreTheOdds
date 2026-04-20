@@ -14,6 +14,7 @@ import SegmentedPill from '../SegmentedPill';
 import PercentInput from './PercentInput';
 import FractionInput from './FractionInput';
 import SaveTryButtons from '../SaveTryButtons';
+import PresetChips, { Preset } from './PresetChips';
 
 export function generateUUID(digits = 15) {
     const str = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVXZ';
@@ -33,6 +34,7 @@ const ModalForm: FC<Props> = ({ navigation }) => {
     const { state, dispatch } = useClicker();
     const { state: oState, dispatch: oDispatch } = useOddsItems();
     const [titleFocused, setTitleFocused] = useState(false);
+    const [selectedPreset, setSelectedPreset] = useState<string | null>(null);
 
     const [formData, setFormData] = useState({
         oddsString: state.oddsString,
@@ -101,11 +103,40 @@ const ModalForm: FC<Props> = ({ navigation }) => {
             if (oddsString[0] === '.') return;
             setFormData({ ...next, isValid: false });
         }
+        setSelectedPreset(null);
     };
 
     const handleFractionChanges = (data: { denominator?: string; numerator?: string; multiplier?: string }) => {
         const next = { ...formData, ...data };
         setFormData({ ...next, isValid: validateFraction(next) });
+        setSelectedPreset(null);
+    };
+
+    // Apply a "Popular odds" preset – fills the inputs, flips the toggle to
+    // the matching mode, and marks the chip selected.
+    const applyPreset = (preset: Preset) => {
+        if (preset.type === 'percent') {
+            const next = {
+                ...formData,
+                oddsString: preset.oddsString ?? '50',
+                title: preset.label,
+                isValid: true,
+            };
+            setFormData(next);
+            dispatch!({ type: 'SET_FRACTIONPREF', payload: 0 });
+        } else {
+            const next = {
+                ...formData,
+                numerator: preset.numerator ?? '1',
+                denominator: preset.denominator ?? '2',
+                multiplier: preset.multiplier ?? '1',
+                title: preset.label,
+                isValid: true,
+            };
+            setFormData(next);
+            dispatch!({ type: 'SET_FRACTIONPREF', payload: 1 });
+        }
+        setSelectedPreset(preset.key);
     };
 
     // Toggle percent/fraction with reset guard when multiplier or denom would break
@@ -162,6 +193,12 @@ const ModalForm: FC<Props> = ({ navigation }) => {
 
     return (
         <View testID='modalForm' style={styles.container}>
+
+            {/* Popular presets */}
+            <View style={styles.sectionHead}>
+                <Text style={styles.sectionLabel}>Popular</Text>
+            </View>
+            <PresetChips onPick={applyPreset} selectedKey={selectedPreset} />
 
             {/* Odds type toggle */}
             <View style={styles.sectionHead}>
