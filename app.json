@@ -2,7 +2,7 @@
   "expo": {
     "name": "What Are The Odds",
     "slug": "What-Are-The-Odds",
-    "version": "1.0.0",
+    "version": "1.0.1",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "scheme": "myapp",
@@ -20,6 +20,7 @@
     "ios": {
       "supportsTablet": true,
       "bundleIdentifier": "com.ppadilla44.WhatAreTheOdds",
+      "buildNumber": "2",
       "infoPlist": {
         "ITSAppUsesNonExemptEncryption": false
       }
